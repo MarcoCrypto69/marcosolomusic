@@ -1600,8 +1600,9 @@
       const eventsByKey = {};
       for (const e of calEvents) { eventsByKey[e.dateKey] = e; }
 
+      const isMin = (year === 2026 && month === 0);
       let html = `<div class="shows-cal-header">
-        <button class="shows-cal-nav" onclick="prevShowsMonth()">&#8249;</button>
+        <button class="shows-cal-nav" onclick="prevShowsMonth()" ${isMin ? 'disabled style="opacity:0.2;cursor:default;pointer-events:none"' : ''}>&#8249;</button>
         <span>${MOIS_LONG[month]} ${year}</span>
         <button class="shows-cal-nav" onclick="nextShowsMonth()">&#8250;</button>
       </div>
@@ -1664,8 +1665,13 @@
       popup.style.top = top + 'px';
     }
 
+    const MIN_SHOWS_MONTH = new Date(2026, 0, 1); // Janvier 2026
+
     function prevShowsMonth() {
-      showsMonth.setMonth(showsMonth.getMonth()-1);
+      const prev = new Date(showsMonth);
+      prev.setMonth(prev.getMonth()-1);
+      if (prev < MIN_SHOWS_MONTH) return; // Bloqué avant jan 2026
+      showsMonth = prev;
       document.getElementById('showPopup').classList.remove('visible');
       renderShows();
     }
