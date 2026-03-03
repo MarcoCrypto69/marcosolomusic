@@ -424,7 +424,21 @@
 
   <script>
     const ICAL_URL = 'https://p108-caldav.icloud.com/published/2/MTkxNzE3MzUwMDE5MTcxN64lgGj6HKmXYeZ4asUyHiuKiXQuuFCGj6teGAq8w7vS';
-    const PROXY = 'https://api.allorigins.win/raw?url=';
+    const PROXIES = [
+      'https://api.allorigins.win/raw?url=',
+      'https://api.codetabs.com/v1/proxy/?quest=',
+    ];
+    async function fetchIcal() {
+      for (const proxy of PROXIES) {
+        try {
+          const res = await fetch(proxy + encodeURIComponent(ICAL_URL), { cache: 'no-store', signal: AbortSignal.timeout(8000) });
+          if (!res.ok) continue;
+          const text = await res.text();
+          if (text.includes('BEGIN:VCALENDAR')) return text;
+        } catch(e) {}
+      }
+      return null;
+    }
     const MOIS_LONG = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
     const MOIS_COURT = ['jan','fév','mars','avr','mai','juin','juil','août','sep','oct','nov','déc'];
 
@@ -477,14 +491,14 @@
         }
       } catch(e) {}
 
-      // Fetch en arrière-plan
+      // Fetch avec fallback proxies
       try {
-        const res = await fetch(PROXY + encodeURIComponent(ICAL_URL), { cache: 'no-store' });
-        calEvents = parseIcal(await res.text());
-        localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), events: calEvents }));
-      } catch(e) {
-        calEvents = [];
-      }
+        const text = await fetchIcal();
+        if (text) {
+          calEvents = parseIcal(text);
+          localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), events: calEvents }));
+        }
+      } catch(e) {}
       renderCal();
     }
 
