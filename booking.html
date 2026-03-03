@@ -464,6 +464,10 @@
     const CACHE_TTL = 10 * 60 * 1000;
 
     async function init() {
+      // Afficher tout de suite
+      renderCal();
+
+      // Cache dispo → update immédiat
       try {
         const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
         if (cached && (Date.now() - cached.ts) < CACHE_TTL) {
@@ -472,6 +476,8 @@
           return;
         }
       } catch(e) {}
+
+      // Fetch en arrière-plan
       try {
         const res = await fetch(PROXY + encodeURIComponent(ICAL_URL), { cache: 'no-store' });
         calEvents = parseIcal(await res.text());
