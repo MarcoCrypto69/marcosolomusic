@@ -1001,11 +1001,65 @@
       margin-top: 2px;
     }
 
+    /* === HAMBURGER MENU === */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile-menu {
+      display: none;
+      position: fixed;
+      top: 66px;
+      left: 0;
+      right: 0;
+      background: rgba(10,10,10,0.98);
+      backdrop-filter: blur(10px);
+      z-index: 99;
+      border-bottom: 1px solid rgba(245,166,35,0.2);
+      padding: 16px 0;
+    }
+    .nav-mobile-menu.open { display: block; }
+    .nav-mobile-menu li { list-style: none; }
+    .nav-mobile-menu a {
+      display: block;
+      padding: 14px 24px;
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: color 0.2s;
+    }
+    .nav-mobile-menu a:hover, .nav-mobile-menu a:active { color: var(--gold); }
+    .nav-mobile-menu .nav-booking {
+      margin: 12px 24px 4px;
+      display: block;
+      text-align: center;
+      border-radius: 4px;
+    }
+
     /* === MOBILE === */
     @media (max-width: 768px) {
-      nav ul {
-        display: none;
-      }
+      nav ul { display: none; }
+      .nav-hamburger { display: flex; }
 
       .about-grid,
       .contact-wrapper,
@@ -1013,25 +1067,60 @@
         grid-template-columns: 1fr;
       }
 
-      .services-grid {
-        grid-template-columns: 1fr;
+      .services-grid { grid-template-columns: 1fr; }
+
+      .show-card { grid-template-columns: 70px 1fr; }
+      .show-tag { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+
+      /* Sections padding réduit */
+      section,
+      #shows .section-wrapper,
+      .setlist-wrapper,
+      .booking-wrapper {
+        padding-left: 16px;
+        padding-right: 16px;
+        padding-top: 48px;
+        padding-bottom: 48px;
       }
 
-      .show-card {
-        grid-template-columns: 70px 1fr;
+      /* Vidéos : scroll horizontal */
+      #videos > div > div:last-child {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 12px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        justify-content: flex-start;
+      }
+      #videos > div > div:last-child > div {
+        flex-shrink: 0;
+        scroll-snap-align: start;
+      }
+      #videos > div > div:last-child iframe {
+        width: 260px;
+        height: 462px;
       }
 
-      .show-tag {
-        display: none;
-      }
+      /* Setlist drawer plein écran */
+      #setlist { width: 100vw; }
 
-      .form-row {
-        grid-template-columns: 1fr;
+      /* Style filters scroll horizontal */
+      .style-filters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 8px;
+        -webkit-overflow-scrolling: touch;
       }
+      .style-btn { flex-shrink: 0; }
 
-      .about-stats {
-        grid-template-columns: 1fr 1fr;
-      }
+      /* FAB bouton */
+      .setlist-fab { bottom: 16px; right: 16px; font-size: 0.85rem; padding: 12px 16px; }
+
+      /* Song item : cacher le style tag */
+      .song-style { display: none; }
+      .song-artist { display: none; }
     }
   </style>
 </head>
@@ -1048,7 +1137,19 @@
       <li><a href="javascript:void(0)" onclick="openSetlist()">Répertoire</a></li>
       <li><a href="#contact" class="nav-booking">Booking</a></li>
     </ul>
+    <button class="nav-hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+  <!-- MENU MOBILE -->
+  <ul class="nav-mobile-menu" id="mobileMenu">
+    <li><a href="#shows" onclick="closeMobileMenu()">Shows</a></li>
+    <li><a href="#videos" onclick="closeMobileMenu()">Vidéos</a></li>
+    <li><a href="#about" onclick="closeMobileMenu()">À propos</a></li>
+    <li><a href="#services" onclick="closeMobileMenu()">Services</a></li>
+    <li><a href="javascript:void(0)" onclick="closeMobileMenu();openSetlist()">Répertoire</a></li>
+    <li><a href="#contact" class="nav-booking" onclick="closeMobileMenu()">Booking</a></li>
+  </ul>
 
   <!-- HEADER -->
   <section id="hero">
@@ -1450,6 +1551,16 @@
     }
 
     loadCalendar();
+
+    // === MOBILE MENU ===
+    function toggleMobileMenu() {
+      document.getElementById('hamburger').classList.toggle('open');
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+    function closeMobileMenu() {
+      document.getElementById('hamburger').classList.remove('open');
+      document.getElementById('mobileMenu').classList.remove('open');
+    }
 
     // === SETLIST DRAWER ===
     function openSetlist() {
