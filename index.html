@@ -266,7 +266,41 @@
       text-align: center;
       color: var(--gray);
       padding: 40px;
-      font-style: italic;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(245,166,35,0.2);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Skeleton pulse pour le calendrier */
+    .cal-skeleton {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      margin-top: 12px;
+    }
+    .cal-skeleton-cell {
+      aspect-ratio: 1;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.05);
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+    .cal-skeleton-cell:nth-child(odd) { animation-delay: 0.2s; }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.9; }
     }
 
     .shows-empty {
@@ -1176,7 +1210,7 @@
       <h2 class="section-title">Prochains Shows</h2>
       <div class="divider"></div>
       <div class="shows-grid" id="showsGrid">
-        <div class="shows-loading">Chargement du calendrier...</div>
+        <div class="shows-loading"><div class="spinner"></div> Chargement...</div>
       </div>
     </div>
   </div>
@@ -1342,7 +1376,14 @@
         <h2>Vérifiez une date</h2>
         <p class="sub">Cliquez sur une date <span style="color:#4ade80">verte</span> pour la réserver. Les dates <span style="color:var(--gold)">dorées</span> sont déjà bookées.</p>
         <div id="bookingCal">
-          <div class="shows-loading">Chargement du calendrier...</div>
+          <div class="shows-loading"><div class="spinner"></div> Chargement...</div>
+          <div class="cal-skeleton">
+            <div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div>
+            <div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div>
+            <div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div>
+            <div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div>
+            <div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div>
+          </div>
         </div>
       </div>
 
