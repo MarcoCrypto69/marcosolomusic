@@ -186,81 +186,134 @@
       background: var(--dark);
     }
 
-    #shows > * {
-      max-width: 1100px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
     #shows .section-wrapper {
-      max-width: 1100px;
+      max-width: 900px;
       margin: 0 auto;
       padding: 80px 24px;
     }
 
-    .shows-grid {
+    /* Grand calendrier shows */
+    .shows-cal-header {
       display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .show-card {
-      background: var(--dark2);
-      border: 1px solid rgba(245, 166, 35, 0.15);
-      border-radius: 8px;
-      padding: 20px 28px;
-      display: grid;
-      grid-template-columns: 100px 1fr auto;
       align-items: center;
-      gap: 24px;
-      transition: border-color 0.2s, background 0.2s;
+      justify-content: space-between;
+      margin-bottom: 20px;
     }
-
-    .show-card:hover {
-      border-color: rgba(245, 166, 35, 0.5);
-      background: var(--dark3);
-    }
-
-    .show-date {
-      text-align: center;
-    }
-
-    .show-date .day {
-      font-size: 2rem;
+    .shows-cal-header span {
+      font-size: 1.3rem;
       font-weight: 800;
+      color: var(--white);
+      text-transform: capitalize;
+    }
+    .shows-cal-nav {
+      background: none;
+      border: 1px solid rgba(245,166,35,0.3);
       color: var(--gold);
-      line-height: 1;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
     }
+    .shows-cal-nav:hover { background: rgba(245,166,35,0.1); border-color: var(--gold); }
 
-    .show-date .month {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--gray);
-    }
-
-    .show-info h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
+    .shows-cal-dow-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
       margin-bottom: 4px;
     }
-
-    .show-info p {
+    .shows-cal-dow {
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 700;
       color: var(--gray);
-      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 6px 0;
     }
 
-    .show-tag {
-      background: rgba(245, 166, 35, 0.15);
-      color: var(--gold);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      white-space: nowrap;
+    .shows-cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
     }
+
+    .shows-cal-day {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 600;
+      position: relative;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid transparent;
+      transition: all 0.2s;
+      cursor: default;
+      overflow: hidden;
+    }
+    .shows-cal-day.empty { background: transparent; border: none; }
+    .shows-cal-day.past { color: rgba(255,255,255,0.2); }
+    .shows-cal-day.today { border-color: rgba(245,166,35,0.4); color: var(--gold); }
+    .shows-cal-day.has-show {
+      background: rgba(245,166,35,0.15);
+      border-color: rgba(245,166,35,0.5);
+      color: var(--gold);
+      cursor: pointer;
+      font-weight: 800;
+    }
+    .shows-cal-day.has-show:hover {
+      background: rgba(245,166,35,0.28);
+      border-color: var(--gold);
+      transform: scale(1.06);
+      z-index: 1;
+    }
+    .shows-cal-day.has-show.active {
+      background: var(--gold);
+      color: var(--black);
+      border-color: var(--gold);
+    }
+    .shows-cal-day .show-dot {
+      width: 5px;
+      height: 5px;
+      background: var(--gold);
+      border-radius: 50%;
+      position: absolute;
+      bottom: 5px;
+    }
+    .shows-cal-day.has-show.active .show-dot { background: var(--black); }
+
+    /* Popup info show */
+    .show-popup {
+      margin-top: 16px;
+      background: rgba(245,166,35,0.08);
+      border: 1px solid rgba(245,166,35,0.3);
+      border-radius: 10px;
+      padding: 20px 24px;
+      display: none;
+      animation: fadeIn 0.2s ease;
+    }
+    .show-popup.visible { display: block; }
+    .show-popup h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; color: var(--gold); }
+    .show-popup p { color: var(--gray); font-size: 0.9rem; margin-top: 4px; }
+    .show-popup .tag {
+      display: inline-block;
+      background: rgba(245,166,35,0.15);
+      color: var(--gold);
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
 
     .shows-loading {
       text-align: center;
@@ -1209,9 +1262,10 @@
       <p class="section-label">Calendrier</p>
       <h2 class="section-title">Prochains Shows</h2>
       <div class="divider"></div>
-      <div class="shows-grid" id="showsGrid">
+      <div id="showsGrid">
         <div class="shows-loading"><div class="spinner"></div> Chargement...</div>
       </div>
+      <div class="show-popup" id="showPopup"></div>
     </div>
   </div>
 
@@ -1526,26 +1580,80 @@
       renderBookingCal();
     }
 
+    let showsMonth = new Date(); showsMonth.setDate(1);
+
     function renderShows() {
       const grid = document.getElementById('showsGrid');
-      const now = new Date(); now.setHours(0,0,0,0);
-      const upcoming = calEvents.filter(e => e.date >= now);
-      if (!upcoming.length) {
-        grid.innerHTML = `<div class="shows-empty"><p>Aucun show annoncé pour l'instant.</p><p>Suivez Marco sur Facebook!</p></div>`;
+      const year = showsMonth.getFullYear();
+      const month = showsMonth.getMonth();
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month+1, 0).getDate();
+      const today = new Date(); today.setHours(0,0,0,0);
+      const JOURS = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+      const eventsByKey = {};
+      for (const e of calEvents) { eventsByKey[e.dateKey] = e; }
+
+      let html = `<div class="shows-cal-header">
+        <button class="shows-cal-nav" onclick="prevShowsMonth()">&#8249;</button>
+        <span>${MOIS_LONG[month]} ${year}</span>
+        <button class="shows-cal-nav" onclick="nextShowsMonth()">&#8250;</button>
+      </div>
+      <div class="shows-cal-dow-row">
+        ${JOURS.map(j=>`<div class="shows-cal-dow">${j}</div>`).join('')}
+      </div>
+      <div class="shows-cal-grid">
+        ${Array(firstDay).fill('<div class="shows-cal-day empty"></div>').join('')}`;
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const date = new Date(year, month, d);
+        const key = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+        const isPast = date < today;
+        const isToday = date.getTime() === today.getTime();
+        const ev = eventsByKey[key];
+        let cls = 'shows-cal-day';
+        if (isPast) cls += ' past';
+        if (isToday) cls += ' today';
+        if (ev) cls += ' has-show';
+        html += `<div class="${cls}"${ev ? ` onclick="showEventDetail('${key}', this)"` : ''}>
+          ${d}${ev ? '<span class="show-dot"></span>' : ''}
+        </div>`;
+      }
+      html += `</div>`;
+      grid.innerHTML = html;
+    }
+
+    function showEventDetail(key, el) {
+      const e = calEvents.find(ev => ev.dateKey === key);
+      const popup = document.getElementById('showPopup');
+      if (!e) return;
+      if (popup.dataset.key === key && popup.classList.contains('visible')) {
+        popup.classList.remove('visible');
+        popup.dataset.key = '';
+        document.querySelectorAll('.shows-cal-day.active').forEach(x => x.classList.remove('active'));
         return;
       }
-      grid.innerHTML = upcoming.map(s => `
-        <div class="show-card">
-          <div class="show-date">
-            <div class="day">${String(s.date.getDate()).padStart(2,'0')}</div>
-            <div class="month">${MOIS_COURT[s.date.getMonth()]}</div>
-          </div>
-          <div class="show-info">
-            <h3>${s.title}</h3>
-            ${s.location ? `<p>📍 ${s.location}</p>` : ''}
-          </div>
-          <div class="show-tag">${s.isPrivate ? '🔒 Privé' : '🎤 Gratuit'}</div>
-        </div>`).join('');
+      document.querySelectorAll('.shows-cal-day.active').forEach(x => x.classList.remove('active'));
+      el.classList.add('active');
+      popup.dataset.key = key;
+      const dateStr = e.date.toLocaleDateString('fr-CA', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+      popup.innerHTML = `
+        <span class="tag">${e.isPrivate ? '🔒 Événement privé' : '🎤 Spectacle'}</span>
+        <h3>${e.title}</h3>
+        <p>📅 ${dateStr.charAt(0).toUpperCase() + dateStr.slice(1)}</p>
+        ${e.location ? `<p>📍 ${e.location}</p>` : ''}
+      `;
+      popup.classList.add('visible');
+    }
+
+    function prevShowsMonth() {
+      showsMonth.setMonth(showsMonth.getMonth()-1);
+      document.getElementById('showPopup').classList.remove('visible');
+      renderShows();
+    }
+    function nextShowsMonth() {
+      showsMonth.setMonth(showsMonth.getMonth()+1);
+      document.getElementById('showPopup').classList.remove('visible');
+      renderShows();
     }
 
     function renderBookingCal() {
