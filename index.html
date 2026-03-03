@@ -1270,9 +1270,17 @@
       <h2 class="section-title">Prochains Shows</h2>
       <div class="divider"></div>
       <div style="position:relative;">
-        <div id="showsGrid">
-          <div class="shows-loading"><div class="spinner"></div> Chargement...</div>
+        <div class="shows-cal-header">
+          <button class="shows-cal-nav" id="prevShowsBtn" onclick="prevShowsMonth()">&#8249;</button>
+          <span id="showsMonthLabel" style="font-size:1.3rem;font-weight:800;color:var(--white);text-transform:capitalize;"></span>
+          <button class="shows-cal-nav" onclick="nextShowsMonth()">&#8250;</button>
         </div>
+        <div class="shows-cal-dow-row">
+          <div class="shows-cal-dow">Dim</div><div class="shows-cal-dow">Lun</div><div class="shows-cal-dow">Mar</div>
+          <div class="shows-cal-dow">Mer</div><div class="shows-cal-dow">Jeu</div><div class="shows-cal-dow">Ven</div>
+          <div class="shows-cal-dow">Sam</div>
+        </div>
+        <div class="shows-cal-grid" id="showsGrid"></div>
         <div class="show-popup" id="showPopup"></div>
       </div>
     </div>
@@ -1593,27 +1601,30 @@
 
     function renderShows() {
       const grid = document.getElementById('showsGrid');
+      if (!grid) return;
       const year = showsMonth.getFullYear();
       const month = showsMonth.getMonth();
       const firstDay = new Date(year, month, 1).getDay();
       const daysInMonth = new Date(year, month+1, 0).getDate();
       const today = new Date(); today.setHours(0,0,0,0);
-      const JOURS = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
       const eventsByKey = {};
       for (const e of calEvents) { eventsByKey[e.dateKey] = e; }
 
-      const isMin = (year === 2026 && month === 0);
-      let html = `<div class="shows-cal-header">
-        <button class="shows-cal-nav" onclick="prevShowsMonth()" ${isMin ? 'disabled style="opacity:0.2;cursor:default;pointer-events:none"' : ''}>&#8249;</button>
-        <span>${MOIS_LONG[month]} ${year}</span>
-        <button class="shows-cal-nav" onclick="nextShowsMonth()">&#8250;</button>
-      </div>
-      <div class="shows-cal-dow-row">
-        ${JOURS.map(j=>`<div class="shows-cal-dow">${j}</div>`).join('')}
-      </div>
-      <div class="shows-cal-grid">
-        ${Array(firstDay).fill('<div class="shows-cal-day empty"></div>').join('')}`;
+      // Label du mois
+      const label = document.getElementById('showsMonthLabel');
+      if (label) label.textContent = MOIS_LONG[month] + ' ' + year;
 
+      // Flèche gauche bloquée en jan 2026
+      const prevBtn = document.getElementById('prevShowsBtn');
+      if (prevBtn) {
+        const isMin = (year === 2026 && month === 0);
+        prevBtn.disabled = isMin;
+        prevBtn.style.opacity = isMin ? '0.2' : '1';
+        prevBtn.style.pointerEvents = isMin ? 'none' : 'auto';
+      }
+
+      // Grille des jours seulement
+      let html = Array(firstDay).fill('<div class="shows-cal-day empty"></div>').join('');
       for (let d = 1; d <= daysInMonth; d++) {
         const date = new Date(year, month, d);
         const key = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
@@ -1628,7 +1639,6 @@
           ${d}${ev ? '<span class="show-dot"></span>' : ''}
         </div>`;
       }
-      html += `</div>`;
       grid.innerHTML = html;
     }
 
