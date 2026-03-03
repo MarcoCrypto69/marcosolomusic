@@ -460,10 +460,22 @@
       return events;
     }
 
+    const CACHE_KEY = 'ical_cache';
+    const CACHE_TTL = 10 * 60 * 1000;
+
     async function init() {
       try {
-        const res = await fetch(PROXY + encodeURIComponent(ICAL_URL + '?t=' + Date.now()), { cache: 'no-store' });
+        const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+        if (cached && (Date.now() - cached.ts) < CACHE_TTL) {
+          calEvents = cached.events.map(e => ({ ...e, date: new Date(e.date) }));
+          renderCal();
+          return;
+        }
+      } catch(e) {}
+      try {
+        const res = await fetch(PROXY + encodeURIComponent(ICAL_URL), { cache: 'no-store' });
         calEvents = parseIcal(await res.text());
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), events: calEvents }));
       } catch(e) {
         calEvents = [];
       }

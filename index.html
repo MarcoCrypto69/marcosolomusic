@@ -1436,11 +1436,26 @@
       return events.sort((a,b) => a.date - b.date);
     }
 
+    const CACHE_KEY = 'ical_cache';
+    const CACHE_TTL = 10 * 60 * 1000; // 10 minutes
+
     async function loadCalendar() {
+      // Essayer le cache d'abord
       try {
-        const bust = '?t=' + Date.now();
-        const res = await fetch(PROXY + encodeURIComponent(ICAL_URL + bust), { cache: 'no-store' });
+        const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+        if (cached && (Date.now() - cached.ts) < CACHE_TTL) {
+          calEvents = cached.events.map(e => ({ ...e, date: new Date(e.date) }));
+          renderShows();
+          renderBookingCal();
+          return;
+        }
+      } catch(e) {}
+
+      // Fetch iCal
+      try {
+        const res = await fetch(PROXY + encodeURIComponent(ICAL_URL), { cache: 'no-store' });
         calEvents = parseIcal(await res.text());
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), events: calEvents }));
       } catch(e) {
         console.warn('iCal:', e);
         calEvents = [];
