@@ -1269,8 +1269,10 @@
       <p class="section-label">Calendrier</p>
       <h2 class="section-title">Prochains Shows</h2>
       <div class="divider"></div>
-      <div id="showsGrid">
-        <div class="shows-loading"><div class="spinner"></div> Chargement...</div>
+      <div style="position:relative;">
+        <div id="showsGrid">
+          <div class="shows-loading"><div class="spinner"></div> Chargement...</div>
+        </div>
         <div class="show-popup" id="showPopup"></div>
       </div>
     </div>
@@ -1651,16 +1653,15 @@
         ${e.location ? `<p>📍 ${e.location}</p>` : ''}
       `;
       popup.classList.add('visible');
-      // Positionner au-dessus de la cellule
-      const grid = document.getElementById('showsGrid');
-      const gridRect = grid.getBoundingClientRect();
+      // Positionner par rapport au wrapper parent
+      const wrapper = popup.parentElement;
+      const wrapRect = wrapper.getBoundingClientRect();
       const cellRect = el.getBoundingClientRect();
-      let left = cellRect.left - gridRect.left + cellRect.width / 2 - 140;
-      let top = cellRect.top - gridRect.top - 10;
-      if (left + 280 > grid.offsetWidth) left = grid.offsetWidth - 285;
+      let left = cellRect.left - wrapRect.left + cellRect.width / 2 - 140;
+      let top = cellRect.top - wrapRect.top - 130;
+      if (left + 280 > wrapper.offsetWidth) left = wrapper.offsetWidth - 285;
       if (left < 0) left = 4;
-      if (top < 40) top = cellRect.top - gridRect.top + cellRect.height + 8;
-      else top = cellRect.top - gridRect.top - 120;
+      if (top < 0) top = cellRect.top - wrapRect.top + cellRect.height + 8;
       popup.style.left = left + 'px';
       popup.style.top = top + 'px';
     }
