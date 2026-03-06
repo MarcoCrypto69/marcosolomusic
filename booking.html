@@ -380,6 +380,16 @@
 </head>
 <body>
 
+  <style>#merciOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center;}#merciOverlay.visible{display:flex;}</style>
+  <div id="merciOverlay" onclick="if(event.target===this||event.target.tagName==='BUTTON')this.classList.remove('visible')">
+    <div style="background:#1a1a1a;border:1px solid rgba(245,166,35,0.3);border-radius:16px;padding:48px 40px;max-width:460px;width:calc(100% - 40px);text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.6);">
+      <div style="font-size:3rem;margin-bottom:16px;">🎸</div>
+      <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:12px;color:#fff;">Merci pour ta demande!</h2>
+      <p style="color:#999;font-size:0.95rem;line-height:1.6;margin-bottom:28px;">Marco a bien reçu ton message et va te revenir sous 24h.</p>
+      <button onclick="document.getElementById('merciOverlay').classList.remove('visible')" style="background:#f5a623;color:#000;border:none;padding:14px 36px;border-radius:8px;font-weight:900;font-size:0.95rem;cursor:pointer;">Parfait, merci!</button>
+    </div>
+  </div>
+
   <header>
     <a href="index.html">
       <img src="logo.png" alt="Marco Solo Music">
@@ -598,17 +608,9 @@
 
     function handleSubmit(e) {
       e.preventDefault();
-      const btn = e.target.querySelector('.btn-submit');
-      btn.textContent = '✓ Demande envoyée!';
-      btn.style.background = '#22c55e';
-      btn.style.color = '#fff';
-      setTimeout(() => {
-        btn.textContent = 'Envoyer ma demande →';
-        btn.style.background = '';
-        btn.style.color = '';
-        e.target.reset();
-        document.getElementById('dateBanner').classList.remove('visible');
-      }, 4000);
+      e.target.reset();
+      document.getElementById('dateBanner').classList.remove('visible');
+      document.getElementById('merciOverlay').classList.add('visible');
     }
 
     init();
