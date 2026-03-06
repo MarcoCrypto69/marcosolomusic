@@ -612,7 +612,7 @@
       btn.textContent = 'Envoi en cours...';
       btn.disabled = true;
       try {
-        const res = await fetch('/api/booking', {
+        const res = await fetch('https://www.marcosolomusic.ca/api/booking', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
