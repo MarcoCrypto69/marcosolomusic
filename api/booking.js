@@ -24,7 +24,7 @@ module.exports = async function handler(req, res) {
     <tr><td align="center">
       <table width="600" cellpadding="0" cellspacing="0" style="background:#111;border-radius:12px;overflow:hidden;border:1px solid rgba(245,166,35,0.3);">
         <tr><td align="center" style="background:#0a0a0a;padding:24px 0 16px;">
-          <img src="https://marcosolomusic.ca/logohero.png" width="200" alt="Marco Solo Music" style="display:block;">
+          <img src="https://marcosolomusic.ca/logo.png" width="220" alt="Marco Solo Music" style="display:block;">
         </td></tr>
         <tr><td style="padding:8px 0;background:#f5a623;"></td></tr>
         <tr><td style="padding:32px 40px;">
