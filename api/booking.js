@@ -14,7 +14,7 @@ module.exports = async function handler(req, res) {
       },
       body: JSON.stringify({
         from: 'Booking <booking@marcosolomusic.ca>',
-        to: ['info@marcosolomusic.ca'],
+        to: ['patriote521@gmail.com'],
         reply_to: email,
         subject: `Demande de booking — ${nom}`,
         html: `
