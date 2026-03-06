@@ -46,9 +46,22 @@
 
     header img {
       height: 320px;
-      max-width: 100%;
       display: block;
       margin: -55px auto -135px;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        height: auto;
+        padding: 16px 0 8px;
+        overflow: visible;
+      }
+      header img {
+        height: auto;
+        width: 65%;
+        max-width: 260px;
+        margin: 0 auto;
+      }
     }
 
     /* MAIN */
