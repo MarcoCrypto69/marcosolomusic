@@ -606,11 +606,34 @@
       document.getElementById('bookingForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
       e.preventDefault();
-      e.target.reset();
-      document.getElementById('dateBanner').classList.remove('visible');
-      document.getElementById('merciOverlay').classList.add('visible');
+      const btn = e.target.querySelector('.btn-submit');
+      btn.textContent = 'Envoi en cours...';
+      btn.disabled = true;
+      try {
+        const res = await fetch('/api/booking', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nom: document.getElementById('nomInput').value.trim(),
+            email: document.getElementById('emailInput').value.trim(),
+            telephone: e.target.querySelector('[type="tel"]').value.trim(),
+            type: document.getElementById('typeInput').value,
+            date: document.getElementById('bookingDate').value,
+            lieu: e.target.querySelectorAll('input[type="text"]')[1]?.value.trim(),
+            message: e.target.querySelector('textarea').value.trim(),
+          }),
+        });
+        if (res.ok) {
+        } else {
+          alert('Erreur lors de l\'envoi. Réessaie ou écris à info@marcosolomusic.ca');
+        }
+      } catch(err) {
+        alert('Erreur réseau. Réessaie ou écris à info@marcosolomusic.ca');
+      }
+      btn.textContent = 'Envoyer ma demande →';
+      btn.disabled = false;
     }
 
     init();
