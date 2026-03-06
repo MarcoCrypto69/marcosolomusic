@@ -425,7 +425,7 @@
       animation: fadeIn 0.15s ease;
       pointer-events: none;
     }
-    .show-popup.visible { display: block; }
+    .show-popup.visible { display: block; pointer-events: auto; }
     /* conteneur relatif pour le calendrier shows */
     #showsGrid { position: relative; }
     .show-popup h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; color: var(--gold); }
@@ -819,28 +819,6 @@
     .setlist-wrapper::-webkit-scrollbar-track { background: var(--dark2); }
     .setlist-wrapper::-webkit-scrollbar-thumb { background: rgba(245,166,35,0.4); border-radius: 2px; }
 
-    /* Floating button */
-    .setlist-fab {
-      position: fixed;
-      bottom: 80px;
-      right: 24px;
-      z-index: 998;
-      background: var(--gold);
-      color: var(--black);
-      border: none;
-      padding: 14px 20px;
-      border-radius: 50px;
-      font-weight: 800;
-      font-size: 0.95rem;
-      cursor: pointer;
-      font-family: inherit;
-      box-shadow: 0 4px 20px rgba(245,166,35,0.4);
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .setlist-fab:hover { transform: scale(1.05); box-shadow: 0 6px 28px rgba(245,166,35,0.6); }
 
     .setlist-controls {
       display: flex;
@@ -1336,7 +1314,6 @@
       .style-btn { flex-shrink: 0; }
 
       /* FAB bouton */
-      .setlist-fab { bottom: 16px; right: 16px; font-size: 0.85rem; padding: 12px 16px; }
 
       /* Song item : cacher le style tag */
       .song-style { display: none; }
@@ -1345,6 +1322,17 @@
   </style>
 </head>
 <body>
+
+  <!-- POPUP MERCI -->
+  <style>#merciOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center;}#merciOverlay.visible{display:flex;}</style>
+  <div id="merciOverlay" onclick="if(event.target===this||event.target.tagName==='BUTTON')this.classList.remove('visible')" >
+    <div style="background:#1a1a1a;border:1px solid rgba(245,166,35,0.3);border-radius:16px;padding:48px 40px;max-width:460px;width:calc(100% - 40px);text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.6);">
+      <div style="font-size:3rem;margin-bottom:16px;">🎸</div>
+      <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:12px;color:#fff;">Merci pour ta demande!</h2>
+      <p style="color:#999;font-size:0.95rem;line-height:1.6;margin-bottom:28px;">Marco a bien reçu ton message et va te revenir sous 24h.</p>
+      <button onclick="document.getElementById('merciOverlay').classList.remove('visible')" style="background:#f5a623;color:#000;border:none;padding:14px 36px;border-radius:8px;font-weight:900;font-size:0.95rem;cursor:pointer;">Parfait, merci!</button>
+    </div>
+  </div>
 
   <!-- NAV -->
   <nav>
@@ -1355,9 +1343,9 @@
       <li><a href="#about">À propos</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="javascript:void(0)" onclick="openSetlist()">Répertoire</a></li>
-      <li><a href="#contact" class="nav-booking">Booking</a></li>
+      <li><a href="booking.html" class="nav-booking">Booking</a></li>
     </ul>
-    <a href="https://www.facebook.com/jervais.perso/" target="_blank" rel="noopener" title="Facebook" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);transition:all 0.2s;" onmouseover="this.style.borderColor='#1877F2';this.querySelector('svg').style.fill='#1877F2'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.querySelector('svg').style.fill='#888'">
+    <a href="https://www.facebook.com/marcosolomusic" target="_blank" rel="noopener" title="Facebook" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);transition:all 0.2s;" onmouseover="this.style.borderColor='#1877F2';this.querySelector('svg').style.fill='#1877F2'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.querySelector('svg').style.fill='#888'">
       <svg viewBox="0 0 24 24" width="18" height="18" style="fill:#888;transition:fill 0.2s;"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
     </a>
     <button class="nav-hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
@@ -1371,7 +1359,7 @@
     <li><a href="#about" onclick="closeMobileMenu()">À propos</a></li>
     <li><a href="#services" onclick="closeMobileMenu()">Services</a></li>
     <li><a href="javascript:void(0)" onclick="closeMobileMenu();openSetlist()">Répertoire</a></li>
-    <li><a href="#contact" class="nav-booking" onclick="closeMobileMenu()">Booking</a></li>
+    <li><a href="booking.html" class="nav-booking" onclick="closeMobileMenu()">Booking</a></li>
   </ul>
 
   <!-- HEADER -->
@@ -1379,7 +1367,7 @@
     <img src="logo.png" alt="Marco Solo Music — Chansonnier One Man Band Québec" class="hero-logo">
     <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Marco Solo Music — Chansonnier et animateur One Man Band au Québec</h1>
     <div class="hero-ctas">
-      <a href="#contact" class="btn-primary">Réserver Marco</a>
+      <a href="booking.html" class="btn-primary">Réserver Marco</a>
       <a href="#shows" class="btn-secondary">Prochains shows</a>
     </div>
   </section>
@@ -1556,84 +1544,24 @@
   </div>
 
   <!-- FLOATING BUTTON -->
-  <button class="setlist-fab" onclick="openSetlist()">🎵 Répertoire</button>
 
   <!-- BOOKING -->
-  <div id="contact" style="background: var(--dark, #111);">
-    <div class="booking-wrapper">
-
-      <!-- Calendrier disponibilités -->
-      <div class="booking-cal-side">
-        <p class="section-label">Disponibilités</p>
-        <h2>Vérifiez une date</h2>
-        <p class="sub">Cliquez sur une date <span style="color:#4ade80">verte</span> pour la réserver. Les dates <span style="color:var(--gold)">dorées</span> sont déjà bookées.</p>
-        <div id="bookingCal">
-          <div class="shows-loading"><div class="spinner"></div> Chargement...</div>
-          <div class="cal-skeleton">
-            <div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div>
-            <div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div>
-            <div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div>
-            <div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div>
-            <div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div><div class="cal-skeleton-cell"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Formulaire -->
-      <div>
-        <p class="section-label">Booking</p>
-        <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;margin-bottom:12px;">Réservez Marco</h2>
-        <p style="color:var(--gray);font-size:.95rem;margin-bottom:28px;">Disponible partout au Québec. Cliquez une date dans le calendrier ou remplissez directement.</p>
-        <div class="contact-links" style="margin-bottom:24px;">
-          <a href="mailto:info@marcosolomusic.ca" class="contact-link">
-            <span class="icon">✉️</span>
-            <span>info@marcosolomusic.ca</span>
-          </a>
-          <a href="https://www.facebook.com/" target="_blank" class="contact-link">
-            <span class="icon">📘</span>
-            <span>Facebook — Marco Solo Music</span>
-          </a>
-        </div>
-        <form id="bookingForm" class="contact-form" onsubmit="handleSubmit(event)">
-          <div class="form-row">
-            <input type="text" placeholder="Votre nom" required>
-            <input type="email" placeholder="Courriel" required>
-          </div>
-          <input type="tel" placeholder="Téléphone">
-          <select>
-            <option value="" disabled selected>Type d'événement</option>
-            <option>Bar / Restaurant</option>
-            <option>Mariage</option>
-            <option>Fête privée</option>
-            <option>Corporatif</option>
-            <option>Festival</option>
-            <option>Autre</option>
-          </select>
-          <input type="date" id="bookingDate" placeholder="Date de l'événement">
-          <input type="text" placeholder="Adresse / Lieu de l'événement">
-          <textarea placeholder="Détails : durée souhaitée, ambiance, demandes spéciales..."></textarea>
-          <button type="submit" class="btn-primary" style="border:none;cursor:pointer;font-family:inherit;">Envoyer la demande →</button>
-        </form>
-      </div>
-
-    </div>
+  <div id="contact" style="background:var(--dark,#111);padding:80px 20px;text-align:center;">
+    <p class="section-label">Booking</p>
+    <h2 style="font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;margin-bottom:16px;">Réservez Marco Solo</h2>
+    <p style="color:var(--gray,#999);font-size:1rem;margin-bottom:36px;max-width:500px;margin-left:auto;margin-right:auto;">Vérifiez les disponibilités et envoyez votre demande en ligne — réponse sous 24h.</p>
+    <a href="booking.html" class="btn-primary" style="font-size:1.1rem;padding:16px 48px;display:inline-block;max-width:calc(100% - 32px);box-sizing:border-box;white-space:normal;">Vérifier les dates &amp; réserver →</a>
   </div>
 
   <!-- FOOTER -->
   <footer>
     <img src="logo.png" alt="Marco Solo Music">
     <div class="social-links">
-      <a href="https://www.facebook.com/jervais.perso/" target="_blank" rel="noopener" title="Facebook">
+      <a href="https://www.facebook.com/marcosolomusic" target="_blank" rel="noopener" title="Facebook">
         <svg viewBox="0 0 24 24"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
       </a>
       <a href="https://www.youtube.com/@MarcoSoloOneManBand/shorts" target="_blank" rel="noopener" title="YouTube">
         <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
-      </a>
-      <a href="#" title="Instagram">
-        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-      </a>
-      <a href="#" title="Spotify">
-        <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
       </a>
     </div>
     <p>&copy; 2026 Marco Solo Music — Tous droits réservés</p>
@@ -1782,7 +1710,18 @@
       grid.innerHTML = html;
     }
 
+    let _popupJustClosed = false;
+    function closeShowPopup() {
+      const popup = document.getElementById('showPopup');
+      popup.classList.remove('visible');
+      popup.dataset.key = '';
+      document.querySelectorAll('.shows-cal-day.active').forEach(x => x.classList.remove('active'));
+      _popupJustClosed = true;
+      setTimeout(() => { _popupJustClosed = false; }, 300);
+    }
+
     function showEventDetail(key, el) {
+      if (_popupJustClosed) return;
       const e = calEvents.find(ev => ev.dateKey === key);
       const popup = document.getElementById('showPopup');
       if (!e) return;
@@ -1797,6 +1736,7 @@
       popup.dataset.key = key;
       const dateStr = e.date.toLocaleDateString('fr-CA', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
       popup.innerHTML = `
+        <button onclick="event.stopPropagation();closeShowPopup()" style="position:absolute;top:8px;right:10px;background:none;border:none;color:#999;font-size:1.1rem;cursor:pointer;line-height:1;padding:0;">✕</button>
         <span class="tag">${e.isPrivate ? '🔒 Événement privé' : '🎤 Spectacle'}</span>
         <h3>${e.title}</h3>
         <p>📅 ${dateStr.charAt(0).toUpperCase() + dateStr.slice(1)}</p>
@@ -1899,16 +1839,38 @@
       }
     }
 
-    function handleSubmit(e) {
-      e.preventDefault();
-      const btn = e.target.querySelector('button[type="submit"]');
-      btn.textContent = 'Demande envoyée ✓';
-      btn.style.background = '#22c55e';
-      setTimeout(() => {
-        btn.textContent = 'Envoyer la demande →';
-        btn.style.background = '';
-        e.target.reset();
-      }, 3000);
+    async function doContactSubmit() {
+      const nom = document.getElementById('c_nom').value.trim();
+      const email = document.getElementById('c_email').value.trim();
+      if (!nom || !email) { alert('Veuillez entrer votre nom et courriel.'); return; }
+      const btn = document.getElementById('c_btn');
+      btn.textContent = 'Envoi en cours...';
+      btn.disabled = true;
+      try {
+        const res = await fetch('/api/booking', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nom,
+            email,
+            telephone: document.getElementById('c_tel').value.trim(),
+            type: document.getElementById('c_type').value,
+            date: document.getElementById('c_date').value,
+            lieu: document.getElementById('c_lieu').value.trim(),
+            message: document.getElementById('c_msg').value.trim(),
+          }),
+        });
+        if (res.ok) {
+          document.getElementById('bookingForm').reset();
+          document.getElementById('merciOverlay').classList.add('visible');
+        } else {
+          alert('Erreur ' + res.status);
+        }
+      } catch(err) {
+        alert('Erreur réseau: ' + err.message);
+      }
+      btn.textContent = 'Envoyer la demande →';
+      btn.disabled = false;
     }
 
     loadCalendar();
@@ -2027,6 +1989,215 @@
     });
 
     renderSongs();
+  </script>
+
+  <!-- CHAT WIDGET -->
+  <style>
+    #msm-chat-btn {
+      position: fixed;
+      bottom: calc(28px + env(safe-area-inset-bottom));
+      right: 28px;
+      z-index: 200;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 24px rgba(245,166,35,0.4), 0 0 0 2px rgba(245,166,35,0.15);
+      transition: background 0.2s, transform 0.2s;
+    }
+    #msm-chat-btn:hover { background: var(--gold-dark); transform: scale(1.06); }
+    #msm-chat-btn svg { width: 22px; height: 22px; fill: var(--black); }
+
+    #msm-chat-box {
+      position: fixed;
+      bottom: calc(90px + env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 360px;
+      z-index: 200;
+      height: min(520px, 60dvh);
+      background: var(--dark2);
+      border: 1px solid rgba(245,166,35,0.2);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+      display: none;
+      flex-direction: column;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    #msm-chat-box.open { display: flex; }
+    @media (min-width: 768px) {
+      #msm-chat-box { max-width: 520px; height: 620px; }
+    }
+
+    #msm-chat-header {
+      background: var(--dark3);
+      border-bottom: 1px solid rgba(245,166,35,0.2);
+      padding: 13px 16px;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .msm-dot {
+      width: 7px; height: 7px;
+      background: var(--gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+      box-shadow: 0 0 6px rgba(245,166,35,0.7);
+    }
+
+    #msm-chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(245,166,35,0.2) transparent;
+    }
+
+    .msm-msg {
+      max-width: 85%;
+      padding: 9px 13px;
+      border-radius: 3px;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 0.84rem;
+      line-height: 1.5;
+    }
+    .msm-msg.bot {
+      background: var(--dark3);
+      color: var(--white);
+      align-self: flex-start;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .msm-msg.user {
+      background: var(--gold);
+      color: var(--black);
+      align-self: flex-end;
+      font-weight: 500;
+    }
+    .msm-msg.typing { opacity: 0.5; font-style: italic; }
+
+    #msm-chat-form {
+      display: flex;
+      border-top: 1px solid rgba(245,166,35,0.15);
+      background: var(--dark3);
+    }
+    #msm-chat-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 12px 14px;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 16px;
+      color: var(--white);
+      background: transparent;
+    }
+    #msm-chat-input::placeholder { color: rgba(255,255,255,0.3); }
+    #msm-chat-send {
+      border: none;
+      background: none;
+      padding: 0 14px;
+      cursor: pointer;
+      color: var(--gold);
+      font-size: 1.2rem;
+      transition: color 0.2s;
+    }
+    #msm-chat-send:hover { color: var(--gold-dark); }
+  </style>
+
+  <button id="msm-chat-btn" onclick="msmToggleChat()" aria-label="Assistant Marco Solo">
+    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+  </button>
+
+  <div id="msm-chat-box">
+    <div id="msm-chat-header">
+      <div class="msm-dot"></div>
+      <span style="flex:1">Assistant — Marco Solo Music</span>
+      <button onclick="msmToggleChat()" style="background:none;border:none;color:rgba(245,166,35,0.5);font-size:1.2rem;cursor:pointer;padding:0;line-height:1">✕</button>
+    </div>
+    <div id="msm-chat-messages">
+      <div class="msm-msg bot">Hé! Bienvenue sur le site de Marco Solo. Des questions sur les shows, le répertoire ou une demande de booking? C'est le bon endroit!</div>
+    </div>
+    <form id="msm-chat-form" onsubmit="msmSendMsg(event)">
+      <input id="msm-chat-input" type="text" placeholder="Votre question..." autocomplete="off">
+      <button id="msm-chat-send" type="submit">↑</button>
+    </form>
+  </div>
+
+  <script>
+    let msmChatOpen = false;
+    let msmChatHistory = [];
+    const msmBox = document.getElementById('msm-chat-box');
+    const msmBtn = document.getElementById('msm-chat-btn');
+
+    function msmToggleChat() {
+      msmChatOpen = !msmChatOpen;
+      msmBox.classList.toggle('open', msmChatOpen);
+      msmBtn.style.display = msmChatOpen ? 'none' : 'flex';
+    }
+
+    async function msmSendMsg(e) {
+      e.preventDefault();
+      const input = document.getElementById('msm-chat-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      input.value = '';
+      msmAddMsg(text, 'user');
+      msmChatHistory.push({ role: 'user', content: text });
+
+      const typing = msmAddMsg('...', 'bot typing');
+
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: msmChatHistory }),
+        });
+        const data = await res.json();
+        typing.remove();
+        const reply = data.content || 'Désolé, une erreur est survenue.';
+        msmAddMsg(reply, 'bot');
+        msmChatHistory.push({ role: 'assistant', content: reply });
+      } catch {
+        typing.remove();
+        msmAddMsg('Désolé, une erreur est survenue. Contactez Marco directement à info@marcosolomusic.ca', 'bot');
+      }
+    }
+
+    function msmRender(text) {
+      return text
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+        .replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,'<a href="$2" target="_blank" style="color:var(--gold);text-decoration:underline;">$1</a>')
+        .replace(/(?<!href=")(https?:\/\/[^\s<"]+)/g,'<a href="$1" target="_blank" style="color:var(--gold);text-decoration:underline;">$1</a>');
+    }
+    function msmAddMsg(text, type) {
+      const div = document.createElement('div');
+      div.className = 'msm-msg ' + type;
+      if (type.includes('bot') && !type.includes('typing')) {
+        div.innerHTML = msmRender(text);
+      } else {
+        div.textContent = text;
+      }
+      const msgs = document.getElementById('msm-chat-messages');
+      msgs.appendChild(div);
+      msgs.scrollTop = msgs.scrollHeight;
+      return div;
+    }
   </script>
 
 </body>
