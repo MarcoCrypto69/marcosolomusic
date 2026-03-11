@@ -1991,6 +1991,17 @@
       renderSongs();
     });
 
+    // URL param: ?style=québécois active le filtre au chargement
+    const urlStyle = new URLSearchParams(window.location.search).get('style');
+    if (urlStyle) {
+      const styleMap = { 'québécois': '⚜️ Québécois', 'country': 'Country', 'rock': 'Rock', 'jazz': 'Jazz / Blues' };
+      const mapped = styleMap[urlStyle.toLowerCase()] || urlStyle;
+      activeStyle = mapped;
+      document.querySelectorAll('.style-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.style === mapped || (mapped === '⚜️ Québécois' && b.dataset.style === '⚜️ Québécois'));
+      });
+    }
+
     renderSongs();
   </script>
 
