@@ -1517,7 +1517,6 @@
         <div class="style-filters" id="styleFilters">
           <button class="style-btn active" data-style="Tous">Tous (1381)</button>
           <button class="style-btn" data-style="⚜️ Québécois">⚜️ Québécois</button>
-          <button class="style-btn" data-style="Rock QC">🎸 Rock QC</button>
           <button class="style-btn" data-style="Rock">🤘 Rock</button>
           <button class="style-btn" data-style="Années 90">⚡ Années 90</button>
           <button class="style-btn" data-style="Années 80">🕹️ Années 80</button>
@@ -1909,7 +1908,7 @@
 
       if (activeStyle !== 'Tous') {
         if (activeStyle === '⚜️ Québécois') {
-          filtered = filtered.filter(s => s.style === '⚜️ Québécois' || s.style === 'Pop QC');
+          filtered = filtered.filter(s => s.style === '⚜️ Québécois' || s.style === 'Pop QC' || s.style === 'Rock QC');
         } else {
           filtered = filtered.filter(s => s.style === activeStyle);
         }
