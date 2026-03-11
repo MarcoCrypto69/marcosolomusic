@@ -5948,5 +5948,14 @@ const SONGS_DATA = [
   {"titre": "Motel 117", "artiste": "Éric Lapointe", "style": "⚜️ Québécois"},
   {"titre": "Nimporte Quoi", "artiste": "Éric Lapointe", "style": "⚜️ Québécois"},
   {"titre": "On Commence À Squitter", "artiste": "Éric Lapointe", "style": "⚜️ Québécois"},
-  {"titre": "Terre Promise", "artiste": "Éric Lapointe", "style": "⚜️ Québécois"}
+  {"titre": "Terre Promise", "artiste": "Éric Lapointe", "style": "⚜️ Québécois"},
+  {"titre": "All You Ever Do Is Bring Me Down", "artiste": "The Mavericks", "style": "Country"},
+  {"titre": "Hard Luck Woman", "artiste": "Garth Brooks", "style": "Country"},
+  {"titre": "You May Be Right", "artiste": "Garth Brooks", "style": "Country"},
+  {"titre": "Islands In The Stream", "artiste": "Kenny Rogers and Dolly Parton", "style": "Country"},
+  {"titre": "Hard Luck Woman", "artiste": "KISS", "style": "Country"},
+  {"titre": "Take Me Home Country Roads", "artiste": "John Denver", "style": "Country"},
+  {"titre": "I Am A Man Of Constant Sorrow", "artiste": "Misc Soundtrack", "style": "Country"},
+  {"titre": "Colt 45 Country Remix", "artiste": "Cooper Alan", "style": "Country"},
+  {"titre": "Long Gone Lonesome Blues", "artiste": "Hank Williams", "style": "Country"}
 ];
