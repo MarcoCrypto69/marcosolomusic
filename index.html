@@ -1909,7 +1909,11 @@
       let filtered = allSongs;
 
       if (activeStyle !== 'Tous') {
-        filtered = filtered.filter(s => s.style === activeStyle);
+        if (activeStyle === '⚜️ Québécois') {
+          filtered = filtered.filter(s => s.style === '⚜️ Québécois' || s.style === 'Pop QC');
+        } else {
+          filtered = filtered.filter(s => s.style === activeStyle);
+        }
       }
 
       if (searchQuery) {
