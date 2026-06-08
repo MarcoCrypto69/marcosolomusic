@@ -1570,12 +1570,27 @@
   <script>
     // === APPLE CALENDAR iCAL ===
     const ICAL_URL = 'https://p108-caldav.icloud.com/published/2/MTkxNzE3MzUwMDE5MTcxN64lgGj6HKmXYeZ4asUyHiuKiXQuuFCGj6teGAq8w7vS';
+    // Source principale : notre propre fonction serveur (/api/calendar) — fiable, avec cache.
+    // Les proxies publics gratuits restent en filet de secours si jamais l'API est indispo.
     const PROXIES = [
-      'https://api.codetabs.com/v1/proxy/?quest=',
       'https://api.allorigins.win/raw?url=',
+      'https://api.codetabs.com/v1/proxy/?quest=',
     ];
 
     async function fetchIcal() {
+      // 1) Notre endpoint serveur (pas de CORS, pas de proxy tiers)
+      try {
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), 8000);
+        const res = await fetch('/api/calendar', { cache: 'no-store', signal: ctrl.signal });
+        clearTimeout(timer);
+        if (res.ok) {
+          const text = await res.text();
+          if (text.includes('BEGIN:VCALENDAR')) return text;
+        }
+      } catch(e) {}
+
+      // 2) Fallback : proxies publics gratuits
       for (const proxy of PROXIES) {
         try {
           const ctrl = new AbortController();
@@ -1650,12 +1665,21 @@
         }
       } catch(e) {}
 
-      // Fetch avec fallback proxies
+      // Fetch : /api/calendar d'abord, puis proxies en fallback
       try {
         const text = await fetchIcal();
         if (text) {
           calEvents = parseIcal(text);
           localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), events: calEvents }));
+        } else if (calEvents.length === 0) {
+          // Dernier filet : si tout échoue, on ressort le dernier cache connu
+          // (même périmé) pour ne JAMAIS afficher un calendrier vide.
+          try {
+            const stale = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+            if (stale && stale.events) {
+              calEvents = stale.events.map(e => ({ ...e, date: new Date(e.date) }));
+            }
+          } catch(e) {}
         }
       } catch(e) {
         console.warn('iCal:', e);
