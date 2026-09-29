@@ -111,23 +111,6 @@
     @media (max-width: 700px) { .faq { grid-template-columns: 1fr; } }
 
 
-    /* DISPOS */
-    .dispo-line { display: inline-block; margin: 0 auto 20px; padding: 8px 18px; border-radius: 999px; background: rgba(245,166,35,0.12); border: 1px solid rgba(245,166,35,0.5); color: var(--gold); font-weight: 800; font-size: 1rem; }
-    .dispo-line b { color: var(--white); font-size: 1.15rem; }
-    .dispo-line[hidden] { display: none; }
-    .months { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
-    .month { background: var(--dark2); border: 1px solid rgba(245,166,35,0.15); border-radius: 8px; padding: 14px; min-width: 0; }
-    .month h3 { font-size: 1rem; display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
-    .month h3 small { color: var(--gray); font-weight: 400; font-size: 0.8rem; }
-    .month.full h3 small { color: #ff8a80; }
-    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-    .chip { font: inherit; font-size: 0.85rem; border-radius: 999px; padding: 4px 10px; border: 1px solid rgba(74,222,128,0.4); background: rgba(34,197,94,0.1); color: #4ade80; cursor: pointer; }
-    .chip:hover { background: rgba(34,197,94,0.25); }
-    .chip.taken { border-color: rgba(255,255,255,0.08); background: transparent; color: rgba(255,255,255,0.25); text-decoration: line-through; cursor: default; }
-    .dispo-note { color: var(--gray); font-size: 0.85rem; margin-top: 14px; }
-    @media (max-width: 900px) { .months { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 480px) { .months { grid-template-columns: 1fr; } }
-
     /* FORM */
     .form-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: start; }
     @media (max-width: 820px) { .form-grid { grid-template-columns: 1fr; } }
@@ -179,7 +162,6 @@
   <main>
     <section class="hero">
       <div class="wrap">
-        <p class="dispo-line" id="dispoLine" hidden></p>
         <p class="label">Campings · Saison 2027</p>
         <h1>Moitié chansonnier, moitié band. <span>100 % live.</span></h1>
         <p class="sub">Marco Solo, chansonnier One Man Band : guitare, voix, basse, batterie et back vocals, tout joué live, sans backing tracks. Du party de la St-Jean à la soirée tranquille en salle communautaire, il adapte le répertoire à votre monde, des enfants aux grands-parents.</p>
@@ -301,17 +283,7 @@
       </div>
     </section>
 
-    <section class="alt" id="dispos" hidden>
-      <div class="wrap">
-        <p class="label">Disponibilités été 2027</p>
-        <h2>Les samedis encore libres</h2>
-        <div class="divider"></div>
-        <div class="months" id="months"></div>
-        <p class="dispo-note">Mis à jour automatiquement à partir du calendrier de Marco. Cliquez un samedi libre pour le choisir dans le formulaire. Les autres soirs de la semaine sont souvent libres aussi : demandez!</p>
-      </div>
-    </section>
-
-    <section id="reserver">
+    <section class="alt" id="reserver">
       <div class="wrap">
         <p class="label">Réservation campings 2027</p>
         <h2>Réservez Marco pour votre camping</h2>
@@ -410,80 +382,6 @@
       btn.disabled = false; btn.textContent = 'Envoyer ma demande →';
     });
 
-    // === Samedis libres, calculés à partir du calendrier de Marco (/api/calendar) ===
-    (function () {
-      const SEASON_YEAR = 2027, FIRST_MONTH = 4, LAST_MONTH = 8; // mai (4) à septembre (8)
-      const MOIS = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
-      const key = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-      function bookedDates(ics) {
-        const set = new Set();
-        for (const block of ics.split('BEGIN:VEVENT').slice(1)) {
-          const m = block.match(/(?:^|\n)DTSTART[^:\n]*:(\d{4})(\d{2})(\d{2})/);
-          if (m) set.add(m[1] + '-' + m[2] + '-' + m[3]);
-        }
-        return set;
-      }
-      function saturdays() {
-        const out = [], today = new Date(); today.setHours(0, 0, 0, 0);
-        const d = new Date(SEASON_YEAR, FIRST_MONTH, 1);
-        while (d.getDay() !== 6) d.setDate(d.getDate() + 1);
-        while (d.getMonth() <= LAST_MONTH && d.getFullYear() === SEASON_YEAR) {
-          if (d >= today) out.push(new Date(d));
-          d.setDate(d.getDate() + 7);
-        }
-        return out;
-      }
-      function render(booked) {
-        const sats = saturdays();
-        const free = sats.filter(d => !booked.has(key(d)));
-        const line = document.getElementById('dispoLine');
-        line.textContent = '';
-        if (free.length) {
-          const n = document.createElement('b'); n.textContent = free.length;
-          line.append('Il reste ', n, ' samedi' + (free.length > 1 ? 's' : '') + ' de libre pour l\'été ' + SEASON_YEAR);
-        } else {
-          line.textContent = 'Tous les samedis de l\'été ' + SEASON_YEAR + ' sont réservés. Demandez un autre soir!';
-        }
-        line.hidden = false;
-        const box = document.getElementById('months');
-        box.innerHTML = '';
-        for (let m = FIRST_MONTH; m <= LAST_MONTH; m++) {
-          const inMonth = sats.filter(d => d.getMonth() === m);
-          if (!inMonth.length) continue;
-          const nFree = inMonth.filter(d => !booked.has(key(d))).length;
-          const card = document.createElement('div');
-          card.className = 'month' + (nFree ? '' : ' full');
-          const h = document.createElement('h3');
-          h.textContent = MOIS[m].charAt(0).toUpperCase() + MOIS[m].slice(1);
-          const sm = document.createElement('small');
-          sm.textContent = nFree ? nFree + ' libre' + (nFree > 1 ? 's' : '') : 'Complet';
-          h.appendChild(sm); card.appendChild(h);
-          const chips = document.createElement('div'); chips.className = 'chips';
-          for (const d of inMonth) {
-            const taken = booked.has(key(d));
-            const b = document.createElement('button');
-            b.type = 'button'; b.className = 'chip' + (taken ? ' taken' : '');
-            b.textContent = 'Sam. ' + d.getDate();
-            if (taken) { b.disabled = true; b.title = 'Déjà réservé'; b.setAttribute('aria-label', 'Samedi ' + d.getDate() + ' ' + MOIS[m] + ', déjà réservé'); }
-            else {
-              b.setAttribute('aria-label', 'Choisir le samedi ' + d.getDate() + ' ' + MOIS[m]);
-              b.addEventListener('click', () => {
-                document.getElementById('date').value = key(d);
-                document.getElementById('reserver').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-                document.getElementById('camping').focus({ preventScroll: true });
-              });
-            }
-            chips.appendChild(b);
-          }
-          card.appendChild(chips); box.appendChild(card);
-        }
-        document.getElementById('dispos').hidden = false;
-      }
-      fetch('/api/calendar', { cache: 'no-store' })
-        .then(r => r.ok ? r.text() : Promise.reject())
-        .then(t => { if (t.includes('BEGIN:VCALENDAR')) render(bookedDates(t)); })
-        .catch(() => {});
-    })();
   </script>
 </body>
 </html>
