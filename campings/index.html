@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marco Solo pour les campings — Show live pour vos campeurs | Québec</title>
+  <meta name="description" content="Marco Solo, chansonnier One Man Band : un show 100 % live pour les campings du Québec. Soirée en salle, fête thématique ou show extérieur. Son et éclairage inclus, réponse sous 24h.">
+  <link rel="canonical" href="https://marcosolomusic.ca/campings/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://marcosolomusic.ca/campings/">
+  <meta property="og:title" content="Marco Solo pour les campings — Show live pour vos campeurs">
+  <meta property="og:description" content="Un show 100 % live pour vos campeurs : +3 000 spectacles, +2 000 chansons, 20+ ans de scène, équipement pro inclus. Saison 2027.">
+  <meta property="og:image" content="https://marcosolomusic.ca/logohero.png">
+  <meta property="og:locale" content="fr_CA">
+  <style>
+    :root {
+      --gold: #f5a623;
+      --gold-dark: #c97f0a;
+      --black: #0a0a0a;
+      --dark: #111111;
+      --dark2: #1a1a1a;
+      --dark3: #222222;
+      --white: #ffffff;
+      --gray: #999999;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    body { background: var(--black); color: var(--white); font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.55; }
+    a { color: inherit; }
+
+    header { background: rgba(10,10,10,0.98); text-align: center; line-height: 0; overflow: hidden; height: 130px; }
+    header img { height: 320px; display: block; margin: -55px auto -135px; }
+    @media (max-width: 600px) {
+      header { height: auto; padding: 16px 0 8px; overflow: visible; }
+      header img { height: auto; width: 65%; max-width: 260px; margin: 0 auto; }
+    }
+
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    section { padding: 64px 0; }
+    section.alt { background: var(--dark); }
+    .label { font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+    h2 { font-size: clamp(1.6rem, 3.6vw, 2.3rem); font-weight: 800; line-height: 1.15; }
+    .divider { width: 60px; height: 3px; background: var(--gold); margin: 16px 0 36px; }
+
+    /* HERO */
+    .hero { padding: 56px 0 48px; text-align: center; }
+    .hero h1 { font-size: clamp(2rem, 6vw, 3.4rem); font-weight: 900; line-height: 1.08; max-width: 20ch; margin: 0 auto; }
+    .hero h1 span { color: var(--gold); white-space: nowrap; }
+    .hero .sub { color: #c9c9c9; font-size: 1.1rem; max-width: 58ch; margin: 18px auto 0; }
+    .hero .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+    .btn { display: inline-block; padding: 14px 30px; border-radius: 4px; text-decoration: none; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.95rem; transition: all 0.2s; }
+    .btn-gold { background: var(--gold); color: var(--black); }
+    .btn-gold:hover { background: var(--gold-dark); color: var(--white); }
+    .btn-ghost { border: 1px solid rgba(255,255,255,0.25); color: var(--white); }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+    .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 44px; }
+    .stat { background: var(--dark2); border: 1px solid rgba(245,166,35,0.2); border-radius: 8px; padding: 18px 12px; text-align: center; }
+    .stat b { display: block; font-size: 2rem; font-weight: 800; color: var(--gold); line-height: 1; }
+    .stat span { display: block; font-size: 0.8rem; color: var(--gray); margin-top: 8px; }
+    @media (max-width: 700px) { .stats { grid-template-columns: 1fr 1fr; } .stat:first-child { grid-column: span 2; } }
+
+
+    /* PHOTOS */
+    .photos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 820px; margin: 0 auto; }
+    .photos figure { margin: 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(245,166,35,0.2); background: var(--dark2); }
+    .photos img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; object-position: center 35%; }
+    .photos figcaption { padding: 10px 14px; font-size: 0.85rem; color: var(--gray); }
+    @media (max-width: 560px) { .photos { grid-template-columns: 1fr; } }
+
+    /* FORMULES */
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card { background: var(--dark2); border: 1px solid rgba(245,166,35,0.15); border-radius: 8px; padding: 28px 22px; }
+    .card .ico { font-size: 1.8rem; margin-bottom: 12px; }
+    .card h3 { font-size: 1.15rem; margin-bottom: 8px; }
+    .card p { color: #bdbdbd; font-size: 0.95rem; }
+    @media (max-width: 820px) { .cards { grid-template-columns: 1fr; } }
+
+    .why { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 32px; list-style: none; }
+    .why li { padding-left: 28px; position: relative; color: #d6d6d6; }
+    .why li::before { content: "✓"; position: absolute; left: 0; color: var(--gold); font-weight: 900; }
+    .why li strong { color: var(--white); }
+    @media (max-width: 700px) { .why { grid-template-columns: 1fr; } }
+
+    /* VIDEOS */
+    .videos { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+    .videos .v { border-radius: 12px; overflow: hidden; border: 1px solid rgba(245,166,35,0.2); width: 315px; max-width: 100%; aspect-ratio: 9 / 16; }
+    .videos iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .rep-link { text-align: center; margin-top: 28px; color: var(--gray); }
+    .rep-link a { color: var(--gold); font-weight: 700; }
+
+    /* ETAPES */
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; counter-reset: s; }
+    .step { border-top: 3px solid var(--gold); padding-top: 14px; }
+    .step::before { counter-increment: s; content: counter(s); font-weight: 900; color: var(--gold); font-size: 1.4rem; }
+    .step h3 { font-size: 1rem; margin: 6px 0; }
+    .step p { color: #bdbdbd; font-size: 0.9rem; }
+    @media (max-width: 820px) { .steps { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .steps { grid-template-columns: 1fr; } }
+
+
+    /* FAQ */
+    .faq { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .faq details { background: var(--dark2); border: 1px solid rgba(245,166,35,0.15); border-radius: 8px; padding: 16px 18px; }
+    .faq summary { cursor: pointer; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; color: var(--gold); font-weight: 900; }
+    .faq details[open] summary::after { content: "–"; }
+    .faq details p { color: #bdbdbd; font-size: 0.95rem; margin-top: 10px; }
+    @media (max-width: 700px) { .faq { grid-template-columns: 1fr; } }
+
+
+    /* DISPOS */
+    .dispo-line { display: inline-block; margin: 0 auto 20px; padding: 8px 18px; border-radius: 999px; background: rgba(245,166,35,0.12); border: 1px solid rgba(245,166,35,0.5); color: var(--gold); font-weight: 800; font-size: 1rem; }
+    .dispo-line b { color: var(--white); font-size: 1.15rem; }
+    .dispo-line[hidden] { display: none; }
+    .months { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    .month { background: var(--dark2); border: 1px solid rgba(245,166,35,0.15); border-radius: 8px; padding: 14px; min-width: 0; }
+    .month h3 { font-size: 1rem; display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+    .month h3 small { color: var(--gray); font-weight: 400; font-size: 0.8rem; }
+    .month.full h3 small { color: #ff8a80; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip { font: inherit; font-size: 0.85rem; border-radius: 999px; padding: 4px 10px; border: 1px solid rgba(74,222,128,0.4); background: rgba(34,197,94,0.1); color: #4ade80; cursor: pointer; }
+    .chip:hover { background: rgba(34,197,94,0.25); }
+    .chip.taken { border-color: rgba(255,255,255,0.08); background: transparent; color: rgba(255,255,255,0.25); text-decoration: line-through; cursor: default; }
+    .dispo-note { color: var(--gray); font-size: 0.85rem; margin-top: 14px; }
+    @media (max-width: 900px) { .months { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .months { grid-template-columns: 1fr; } }
+
+    /* FORM */
+    .form-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: start; }
+    @media (max-width: 820px) { .form-grid { grid-template-columns: 1fr; } }
+    form { display: flex; flex-direction: column; gap: 14px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 560px) { .row { grid-template-columns: 1fr; } }
+    label { display: flex; flex-direction: column; gap: 6px; font-size: 0.8rem; color: var(--gray); letter-spacing: 0.04em; }
+    input, select, textarea { background: var(--dark2); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 13px 14px; color: var(--white); font-size: 0.95rem; font-family: inherit; width: 100%; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--gold); }
+    textarea { resize: vertical; min-height: 110px; }
+    select option { background: var(--dark2); }
+    .submit { background: var(--gold); color: var(--black); border: none; padding: 15px; border-radius: 6px; font-weight: 800; font-size: 1rem; cursor: pointer; font-family: inherit; letter-spacing: 0.05em; text-transform: uppercase; }
+    .submit:hover { background: var(--gold-dark); color: var(--white); }
+    .submit:disabled { opacity: 0.6; cursor: wait; }
+    .err { color: #ff8a80; font-size: 0.9rem; min-height: 1.2em; }
+    .aside { background: var(--dark2); border: 1px solid rgba(245,166,35,0.2); border-radius: 12px; padding: 26px; }
+    .aside h3 { font-size: 1.1rem; margin-bottom: 10px; }
+    .aside p { color: #bdbdbd; font-size: 0.95rem; margin-bottom: 14px; }
+    .contact-link { display: flex; align-items: center; gap: 12px; text-decoration: none; font-size: 0.95rem; padding: 12px 16px; background: var(--black); border-radius: 8px; border: 1px solid rgba(245,166,35,0.15); margin-top: 10px; overflow-wrap: anywhere; }
+    .contact-link:hover { border-color: var(--gold); color: var(--gold); }
+
+    footer { text-align: center; padding: 28px 16px; border-top: 1px solid rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+    footer a { color: rgba(245,166,35,0.55); text-decoration: none; }
+    footer a:hover { color: var(--gold); }
+
+    #merci { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 9999; align-items: center; justify-content: center; padding: 20px; }
+    #merci.visible { display: flex; }
+    #merci .box { background: #1a1a1a; border: 1px solid rgba(245,166,35,0.3); border-radius: 16px; padding: 44px 32px; max-width: 460px; width: 100%; text-align: center; }
+    #merci h2 { font-size: 1.5rem; margin: 12px 0; }
+    #merci p { color: var(--gray); margin-bottom: 24px; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  </style>
+</head>
+<body>
+
+  <div id="merci" role="dialog" aria-modal="true" aria-labelledby="merciTitle">
+    <div class="box">
+      <div style="font-size:3rem">🏕️</div>
+      <h2 id="merciTitle">Merci, c'est reçu!</h2>
+      <p>Marco vous revient sous 24h avec les dates disponibles et le tarif camping 2027.</p>
+      <button class="submit" type="button" onclick="document.getElementById('merci').classList.remove('visible')">Parfait, merci!</button>
+    </div>
+  </div>
+
+  <header>
+    <a href="/"><img src="/logo.png" alt="Marco Solo Music"></a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <p class="dispo-line" id="dispoLine" hidden></p>
+        <p class="label">Campings · Saison 2027</p>
+        <h1>Moitié chansonnier, moitié band. <span>100 % live.</span></h1>
+        <p class="sub">Marco Solo, chansonnier One Man Band : guitare, voix, basse, batterie et back vocals, tout joué live, sans backing tracks. Du party de la St-Jean à la soirée tranquille en salle communautaire, il adapte le répertoire à votre monde, des enfants aux grands-parents.</p>
+        <div class="ctas">
+          <a href="#reserver" class="btn btn-gold">Réserver une date</a>
+          <a href="#videos" class="btn btn-ghost">Voir les vidéos</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>2K+</b><span>Chansons au répertoire</span></div>
+          <div class="stat"><b>3 000+</b><span>Spectacles donnés</span></div>
+          <div class="stat"><b>20+</b><span>Ans de scène</span></div>
+          <div class="stat"><b>100%</b><span>Live, pas de back-track</span></div>
+          <div class="stat"><b>Pro</b><span>Son et éclairage inclus</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" id="photos">
+      <div class="wrap">
+        <p class="label">Sur scène</p>
+        <h2>Un homme, un band au complet</h2>
+        <div class="divider"></div>
+        <div class="photos">
+          <figure>
+            <img src="marco-live-drum.jpg" alt="Marco Solo en show : il chante et joue de la guitare, avec la batterie (hi-hat et snare) devant lui" width="646" height="1400" loading="lazy">
+            <figcaption>Guitare, voix, kick, snare et hi-hat en même temps.</figcaption>
+          </figure>
+          <figure>
+            <img src="marco-live-guitare.jpg" alt="Marco Solo sur scène avec sa guitare électrique, casquette et lunettes fumées" width="900" height="1200" loading="lazy">
+            <figcaption>Plus de 3 000 spectacles, et toujours 100 % live.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <p class="label">Formules campings</p>
+        <h2>Trois façons de faire danser votre terrain</h2>
+        <div class="divider"></div>
+        <div class="cards">
+          <div class="card">
+            <div class="ico">🎸</div>
+            <h3>Soirée en salle</h3>
+            <p>Trois heures non-stop dans votre salle communautaire ou votre bar, de 20 h à 23 h. Succès québécois, rock, country, années 80-90 : la piste se remplit.</p>
+          </div>
+          <div class="card">
+            <div class="ico">🎉</div>
+            <h3>Fête thématique</h3>
+            <p>St-Jean, 1er juillet, beach party, Halloween des campeurs, fête country. Marco anime la soirée et embarque les campeurs dans le thème.</p>
+          </div>
+          <div class="card">
+            <div class="ico">🌅</div>
+            <h3>Show extérieur</h3>
+            <p>Sur la plage, près de la piscine ou sous le chapiteau. Il suffit d'une surface plane de 8 x 8 pieds et d'une prise électrique.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt">
+      <div class="wrap">
+        <p class="label">Pourquoi Marco</p>
+        <h2>Simple à organiser pour votre équipe des loisirs</h2>
+        <div class="divider"></div>
+        <ul class="why">
+          <li><strong>Arrive avec tout son équipement.</strong> Son, micros et éclairage : vous fournissez une surface plane de 8 x 8 pieds et une prise électrique.</li>
+          <li><strong>Trois heures non-stop.</strong> De 20 h à 23 h, sans pause : l'ambiance ne retombe jamais.</li>
+          <li><strong>Répertoire pour toutes les générations.</strong> Plus de 2 000 chansons, et les campeurs peuvent faire leurs demandes.</li>
+          <li><strong>Un seul musicien, l'énergie d'un band.</strong> Guitare, voix, basse, kick, snare, hi-hat et back vocals, tout joué live, sans backing tracks. Plus de 3 000 spectacles à son actif.</li>
+          <li><strong>Affiche numérique sur demande.</strong> Pour votre page Facebook ou votre babillard.</li>
+          <li><strong>Réponse sous 24h.</strong> Confirmation écrite de la date, de l'heure et du cachet.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="videos">
+      <div class="wrap">
+        <p class="label">En action</p>
+        <h2>Marco en show</h2>
+        <div class="divider"></div>
+        <div class="videos">
+          <div class="v"><iframe src="https://www.youtube.com/embed/JN9J6y7_eac" title="Marco Solo en show (1)" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+          <div class="v"><iframe src="https://www.youtube.com/embed/LjbUk-zo_-U" title="Marco Solo en show (2)" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+          <div class="v"><iframe src="https://www.youtube.com/embed/A2Z3JWmsZkA" title="Marco Solo en show (3)" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        </div>
+        <p class="rep-link">Curieux du répertoire? <a href="/?style=qc#repertoire">Parcourez les +2 000 chansons →</a></p>
+      </div>
+    </section>
+
+    <section class="alt" id="faq">
+      <div class="wrap">
+        <p class="label">Questions fréquentes</p>
+        <h2>Ce que votre équipe des loisirs veut savoir</h2>
+        <div class="divider"></div>
+        <div class="faq">
+          <details open><summary>Combien d'espace faut-il?</summary><p>Une surface plane de 8 x 8 pieds minimum, à l'intérieur ou à l'extérieur. Pas besoin de scène.</p></details>
+          <details open><summary>Combien de temps dure le show?</summary><p>Trois heures non-stop, de 20 h à 23 h, sans pause.</p></details>
+          <details><summary>Qu'est-ce que le camping doit fournir?</summary><p>L'espace et une prise électrique. Le son, les micros et l'éclairage sont inclus.</p></details>
+          <details><summary>Et s'il pleut?</summary><p>Le show se déplace dans votre salle communautaire. Si le camping n'a pas de salle, le show est annulé.</p></details>
+          <details><summary>Les campeurs peuvent-ils faire des demandes?</summary><p>Oui. Avec plus de 2 000 chansons au répertoire, Marco prend les demandes pendant le show.</p></details>
+          <details><summary>Est-ce que c'est vraiment tout live?</summary><p>Oui : guitare, voix, basse, kick, snare, hi-hat et back vocals sont joués en direct, sans backing tracks.</p></details>
+          <details><summary>Comment on réserve?</summary><p>Remplissez le formulaire ci-dessous ou écrivez à info@marcosolomusic.ca. Réponse sous 24h, puis entente écrite avec la date, l'heure et le cachet.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <p class="label">Comment ça marche</p>
+        <h2>De la demande au show</h2>
+        <div class="divider"></div>
+        <div class="steps">
+          <div class="step"><h3>Vous choisissez une date</h3><p>Remplissez le formulaire ci-dessous avec une ou plusieurs dates qui vous conviennent.</p></div>
+          <div class="step"><h3>Confirmation sous 24h</h3><p>Marco vous revient avec ses disponibilités et le tarif camping 2027.</p></div>
+          <div class="step"><h3>Entente écrite</h3><p>Date, heure, durée, lieu et cachet confirmés par courriel.</p></div>
+          <div class="step"><h3>Le show</h3><p>Arrivée tôt pour le montage, et de 20 h à 23 h, vos campeurs chantent et dansent.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" id="dispos" hidden>
+      <div class="wrap">
+        <p class="label">Disponibilités été 2027</p>
+        <h2>Les samedis encore libres</h2>
+        <div class="divider"></div>
+        <div class="months" id="months"></div>
+        <p class="dispo-note">Mis à jour automatiquement à partir du calendrier de Marco. Cliquez un samedi libre pour le choisir dans le formulaire. Les autres soirs de la semaine sont souvent libres aussi : demandez!</p>
+      </div>
+    </section>
+
+    <section id="reserver">
+      <div class="wrap">
+        <p class="label">Réservation campings 2027</p>
+        <h2>Réservez Marco pour votre camping</h2>
+        <div class="divider"></div>
+        <div class="form-grid">
+          <form id="campForm" novalidate>
+            <div class="row">
+              <label for="camping">Nom du camping *<input id="camping" name="camping" type="text" required autocomplete="organization"></label>
+              <label for="ville">Ville<input id="ville" name="ville" type="text"></label>
+            </div>
+            <div class="row">
+              <label for="nom">Votre nom *<input id="nom" name="nom" type="text" required autocomplete="name"></label>
+              <label for="email">Courriel *<input id="email" name="email" type="email" required autocomplete="email"></label>
+            </div>
+            <div class="row">
+              <label for="tel">Téléphone<input id="tel" name="tel" type="tel" autocomplete="tel"></label>
+              <label for="date">Date souhaitée<input id="date" name="date" type="date" min="2027-05-01" max="2027-10-31"></label>
+            </div>
+            <div class="row">
+              <label for="formule">Type de soirée
+                <select id="formule" name="formule">
+                  <option value="">Choisir…</option>
+                  <option>Soirée en salle</option>
+                  <option>Fête thématique (St-Jean, 1er juillet, Halloween…)</option>
+                  <option>Show extérieur</option>
+                  <option>Plusieurs soirées</option>
+                  <option>Pas encore décidé</option>
+                </select>
+              </label>
+              <label for="public">Public attendu (approx.)
+                <select id="public" name="public">
+                  <option value="">Choisir…</option>
+                  <option>Moins de 100 personnes</option>
+                  <option>100 à 200 personnes</option>
+                  <option>200 à 400 personnes</option>
+                  <option>400 à 700 personnes</option>
+                  <option>Plus de 700 personnes</option>
+                </select>
+              </label>
+            </div>
+            <label for="message">Autres dates, heure, lieu du show, questions
+              <textarea id="message" name="message" placeholder="Ex. : on cherche un show pour le samedi 26 juin en soirée, dans la salle communautaire."></textarea>
+            </label>
+            <p class="err" id="err" role="alert"></p>
+            <button type="submit" class="submit" id="submitBtn">Envoyer ma demande →</button>
+          </form>
+
+          <aside class="aside">
+            <h3>Vous préférez parler directement?</h3>
+            <p>Écrivez ou appelez Marco. Il répond aux responsables des loisirs sous 24h, même hors saison.</p>
+            <a class="contact-link" href="mailto:info@marcosolomusic.ca">✉️ &nbsp;info@marcosolomusic.ca</a>
+            <a class="contact-link" href="https://www.facebook.com/marcosolomusic" target="_blank" rel="noopener">📘 &nbsp;Facebook — Marco Solo Music</a>
+            <a class="contact-link" href="/">🎵 &nbsp;Tout le site Marco Solo Music</a>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2026 Marco Solo Music — <a href="/">Retour au site</a> &nbsp;|&nbsp; <a href="/booking.html">Booking autres événements</a> &nbsp;|&nbsp; Site par <a href="https://kodai.ca" target="_blank" rel="noopener">KodAI</a>
+  </footer>
+
+  <script>
+    document.getElementById('campForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const f = e.target, err = document.getElementById('err'), btn = document.getElementById('submitBtn');
+      const v = id => document.getElementById(id).value.trim();
+      err.textContent = '';
+      if (!v('camping') || !v('nom') || !v('email') || !/^\S+@\S+\.\S+$/.test(v('email'))) {
+        err.textContent = 'Il manque le nom du camping, votre nom ou un courriel valide.';
+        return;
+      }
+      btn.disabled = true; btn.textContent = 'Envoi en cours...';
+      const lieu = v('camping') + (v('ville') ? ' — ' + v('ville') : '');
+      const message = [v('formule') ? 'Formule : ' + v('formule') : '', v('public') ? 'Public attendu : ' + v('public') : '', v('message')].filter(Boolean).join('\n');
+      try {
+        const res = await fetch('/api/booking', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nom: v('nom') + ' (' + v('camping') + ')',
+            email: v('email'),
+            telephone: v('tel'),
+            type: 'Camping 2027',
+            date: v('date'),
+            lieu: lieu,
+            message: message,
+          }),
+        });
+        if (res.ok) { f.reset(); document.getElementById('merci').classList.add('visible'); }
+        else err.textContent = "L'envoi n'a pas fonctionné. Écrivez directement à info@marcosolomusic.ca.";
+      } catch (x) {
+        err.textContent = 'Erreur réseau. Réessayez ou écrivez à info@marcosolomusic.ca.';
+      }
+      btn.disabled = false; btn.textContent = 'Envoyer ma demande →';
+    });
+
+    // === Samedis libres, calculés à partir du calendrier de Marco (/api/calendar) ===
+    (function () {
+      const SEASON_YEAR = 2027, FIRST_MONTH = 4, LAST_MONTH = 8; // mai (4) à septembre (8)
+      const MOIS = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+      const key = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+      function bookedDates(ics) {
+        const set = new Set();
+        for (const block of ics.split('BEGIN:VEVENT').slice(1)) {
+          const m = block.match(/(?:^|\n)DTSTART[^:\n]*:(\d{4})(\d{2})(\d{2})/);
+          if (m) set.add(m[1] + '-' + m[2] + '-' + m[3]);
+        }
+        return set;
+      }
+      function saturdays() {
+        const out = [], today = new Date(); today.setHours(0, 0, 0, 0);
+        const d = new Date(SEASON_YEAR, FIRST_MONTH, 1);
+        while (d.getDay() !== 6) d.setDate(d.getDate() + 1);
+        while (d.getMonth() <= LAST_MONTH && d.getFullYear() === SEASON_YEAR) {
+          if (d >= today) out.push(new Date(d));
+          d.setDate(d.getDate() + 7);
+        }
+        return out;
+      }
+      function render(booked) {
+        const sats = saturdays();
+        const free = sats.filter(d => !booked.has(key(d)));
+        const line = document.getElementById('dispoLine');
+        line.textContent = '';
+        if (free.length) {
+          const n = document.createElement('b'); n.textContent = free.length;
+          line.append('Il reste ', n, ' samedi' + (free.length > 1 ? 's' : '') + ' de libre pour l\'été ' + SEASON_YEAR);
+        } else {
+          line.textContent = 'Tous les samedis de l\'été ' + SEASON_YEAR + ' sont réservés. Demandez un autre soir!';
+        }
+        line.hidden = false;
+        const box = document.getElementById('months');
+        box.innerHTML = '';
+        for (let m = FIRST_MONTH; m <= LAST_MONTH; m++) {
+          const inMonth = sats.filter(d => d.getMonth() === m);
+          if (!inMonth.length) continue;
+          const nFree = inMonth.filter(d => !booked.has(key(d))).length;
+          const card = document.createElement('div');
+          card.className = 'month' + (nFree ? '' : ' full');
+          const h = document.createElement('h3');
+          h.textContent = MOIS[m].charAt(0).toUpperCase() + MOIS[m].slice(1);
+          const sm = document.createElement('small');
+          sm.textContent = nFree ? nFree + ' libre' + (nFree > 1 ? 's' : '') : 'Complet';
+          h.appendChild(sm); card.appendChild(h);
+          const chips = document.createElement('div'); chips.className = 'chips';
+          for (const d of inMonth) {
+            const taken = booked.has(key(d));
+            const b = document.createElement('button');
+            b.type = 'button'; b.className = 'chip' + (taken ? ' taken' : '');
+            b.textContent = 'Sam. ' + d.getDate();
+            if (taken) { b.disabled = true; b.title = 'Déjà réservé'; b.setAttribute('aria-label', 'Samedi ' + d.getDate() + ' ' + MOIS[m] + ', déjà réservé'); }
+            else {
+              b.setAttribute('aria-label', 'Choisir le samedi ' + d.getDate() + ' ' + MOIS[m]);
+              b.addEventListener('click', () => {
+                document.getElementById('date').value = key(d);
+                document.getElementById('reserver').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+                document.getElementById('camping').focus({ preventScroll: true });
+              });
+            }
+            chips.appendChild(b);
+          }
+          card.appendChild(chips); box.appendChild(card);
+        }
+        document.getElementById('dispos').hidden = false;
+      }
+      fetch('/api/calendar', { cache: 'no-store' })
+        .then(r => r.ok ? r.text() : Promise.reject())
+        .then(t => { if (t.includes('BEGIN:VCALENDAR')) render(bookedDates(t)); })
+        .catch(() => {});
+    })();
+  </script>
+</body>
+</html>
