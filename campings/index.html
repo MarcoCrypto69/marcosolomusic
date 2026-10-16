@@ -10,7 +10,7 @@
   <meta property="og:url" content="https://marcosolomusic.ca/campings/">
   <meta property="og:title" content="Marco Solo pour les campings — Show live pour vos campeurs">
   <meta property="og:description" content="Un show 100 % live pour vos campeurs : +3 000 spectacles, +2 000 chansons, 20+ ans de scène, équipement pro inclus. Saison 2027.">
-  <meta property="og:image" content="https://marcosolomusic.ca/logohero.png">
+  <meta property="og:image" content="https://jervais.ca/jervais-og.jpg">
   <meta property="og:locale" content="fr_CA">
   <style>
     :root {
@@ -31,7 +31,7 @@
     a { color: inherit; }
 
     header { background: rgba(10,10,10,0.98); text-align: center; line-height: 0; overflow: hidden; height: 130px; }
-    header img { height: 320px; display: block; margin: -55px auto -135px; }
+    header img { height: 90px; display: block; margin: 20px auto; }
     @media (max-width: 600px) {
       header { height: auto; padding: 16px 0 8px; overflow: visible; }
       header img { height: auto; width: 65%; max-width: 260px; margin: 0 auto; }
@@ -148,10 +148,24 @@
     #merci h2 { font-size: 1.5rem; margin: 12px 0; }
     #merci p { color: var(--gray); margin-bottom: 24px; }
     a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+      /* Bande guitare sur le côté (grand écran) */
+    .side-art { display: none; }
+    @media (min-width: 1200px) {
+      body { padding-left: 240px; }
+      nav { left: 240px; width: calc(100% - 240px) !important; }
+      .side-art {
+        display: block; position: fixed; left: 0; top: 0; bottom: 0; width: 240px; z-index: 101;
+        background: #0f1013 url('/side-guitare.webp') left bottom / cover no-repeat;
+        border-right: 1px solid #2b2c34;
+      }
+      .side-art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to right, transparent 70%, rgba(15,16,19,0.6)); }
+    }
+
   </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div class="side-art" aria-hidden="true"></div>
 
   <div id="merci" role="dialog" aria-modal="true" aria-labelledby="merciTitle">
     <div class="box">
@@ -163,7 +177,7 @@
   </div>
 
   <header>
-    <a href="/"><img src="/logo.png" alt="Marco Solo Music"></a>
+    <a href="/"><img src="/logo.png" alt="Jervais"></a>
   </header>
 
   <main>

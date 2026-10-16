@@ -10,7 +10,7 @@
   <meta property="og:url" content="https://marcosolomusic.ca/booking.html">
   <meta property="og:title" content="Réserver Marco Solo Music — Chansonnier One Man Band | Québec">
   <meta property="og:description" content="Réservez Marco Solo pour votre événement au Québec. Vérifiez les disponibilités et envoyez votre demande — réponse sous 24h.">
-  <meta property="og:image" content="https://marcosolomusic.ca/logohero.png">
+  <meta property="og:image" content="https://jervais.ca/jervais-og.jpg">
   <meta property="og:locale" content="fr_CA">
   <style>
     :root {
@@ -46,9 +46,9 @@
     }
 
     header img {
-      height: 320px;
+      height: 90px;
       display: block;
-      margin: -55px auto -135px;
+      margin: 20px auto;
     }
 
     @media (max-width: 600px) {
@@ -377,10 +377,24 @@
       .grid { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
     }
+      /* Bande guitare sur le côté (grand écran) */
+    .side-art { display: none; }
+    @media (min-width: 1200px) {
+      body { padding-left: 240px; }
+      nav { left: 240px; width: calc(100% - 240px) !important; }
+      .side-art {
+        display: block; position: fixed; left: 0; top: 0; bottom: 0; width: 240px; z-index: 101;
+        background: #0f1013 url('/side-guitare.webp') left bottom / cover no-repeat;
+        border-right: 1px solid #2b2c34;
+      }
+      .side-art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to right, transparent 70%, rgba(15,16,19,0.6)); }
+    }
+
   </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div class="side-art" aria-hidden="true"></div>
 
   <style>#merciOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center;}#merciOverlay.visible{display:flex;}</style>
   <div id="merciOverlay" onclick="if(event.target===this||event.target.tagName==='BUTTON')this.classList.remove('visible')">
@@ -394,7 +408,7 @@
 
   <header>
     <a href="index.html">
-      <img src="logo.png" alt="Marco Solo Music">
+      <img src="logo.png" alt="Jervais">
     </a>
   </header>
 
