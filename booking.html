@@ -14,14 +14,15 @@
   <meta property="og:locale" content="fr_CA">
   <style>
     :root {
-      --gold: #f5a623;
-      --gold-dark: #c97f0a;
-      --black: #0a0a0a;
-      --dark: #111111;
-      --dark2: #1a1a1a;
-      --dark3: #222222;
-      --white: #ffffff;
-      --gray: #999999;
+      --gold: #e3202d;
+      --gold-dark: #f2333f;
+      --black: #0f1013;
+      --on-brand: #ffffff;
+      --dark: #121317;
+      --dark2: #17181d;
+      --dark3: #2b2c34;
+      --white: #f3f3f5;
+      --gray: #9d9ea9;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,7 +30,7 @@
     body {
       background: var(--black);
       color: var(--white);
-      font-family: 'Segoe UI', Arial, sans-serif;
+      font-family: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
       min-height: 100vh;
     }
 
@@ -116,7 +117,7 @@
 
     #bookingCal {
       background: var(--dark2);
-      border: 1px solid rgba(245,166,35,0.2);
+      border: 1px solid rgba(227, 32, 45,0.2);
       border-radius: 12px;
       padding: 20px;
     }
@@ -177,7 +178,7 @@
     .cal-day.past { color: rgba(255,255,255,0.15); }
 
     .cal-day.booked {
-      background: rgba(245,166,35,0.15);
+      background: rgba(227, 32, 45,0.15);
       color: var(--gold);
       font-weight: 700;
     }
@@ -198,7 +199,7 @@
 
     .cal-day.selected {
       background: var(--gold) !important;
-      color: var(--black) !important;
+      color: var(--on-brand) !important;
       font-weight: 800;
     }
 
@@ -286,8 +287,8 @@
     .contact-form select option { background: var(--dark2); }
 
     .selected-date-banner {
-      background: rgba(245,166,35,0.12);
-      border: 1px solid rgba(245,166,35,0.4);
+      background: rgba(227, 32, 45,0.12);
+      border: 1px solid rgba(227, 32, 45,0.4);
       border-radius: 6px;
       padding: 10px 16px;
       font-size: 0.9rem;
@@ -299,7 +300,7 @@
 
     .btn-submit {
       background: var(--gold);
-      color: var(--black);
+      color: var(--on-brand);
       border: none;
       padding: 15px;
       border-radius: 6px;
@@ -345,7 +346,7 @@
       padding: 11px 16px;
       background: var(--dark2);
       border-radius: 8px;
-      border: 1px solid rgba(245,166,35,0.1);
+      border: 1px solid rgba(227, 32, 45,0.1);
       transition: all 0.2s;
     }
 
@@ -360,7 +361,7 @@
       font-size: 0.78rem;
     }
 
-    footer a { color: rgba(245,166,35,0.4); text-decoration: none; }
+    footer a { color: rgba(227, 32, 45,0.4); text-decoration: none; }
     footer a:hover { color: var(--gold); }
 
     /* LOADING */
@@ -377,16 +378,17 @@
       .form-row { grid-template-columns: 1fr; }
     }
   </style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <style>#merciOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center;}#merciOverlay.visible{display:flex;}</style>
   <div id="merciOverlay" onclick="if(event.target===this||event.target.tagName==='BUTTON')this.classList.remove('visible')">
-    <div style="background:#1a1a1a;border:1px solid rgba(245,166,35,0.3);border-radius:16px;padding:48px 40px;max-width:460px;width:calc(100% - 40px);text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.6);">
+    <div style="background:#17181d;border:1px solid rgba(227, 32, 45,0.3);border-radius:16px;padding:48px 40px;max-width:460px;width:calc(100% - 40px);text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.6);">
       <div style="font-size:3rem;margin-bottom:16px;">🎸</div>
       <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:12px;color:#fff;">Merci pour ta demande!</h2>
       <p style="color:#999;font-size:0.95rem;line-height:1.6;margin-bottom:28px;">Marco a bien reçu ton message et va te revenir sous 24h.</p>
-      <button onclick="document.getElementById('merciOverlay').classList.remove('visible')" style="background:#f5a623;color:#000;border:none;padding:14px 36px;border-radius:8px;font-weight:900;font-size:0.95rem;cursor:pointer;">Parfait, merci!</button>
+      <button onclick="document.getElementById('merciOverlay').classList.remove('visible')" style="background:#e3202d;color:#fff;border:none;padding:14px 36px;border-radius:8px;font-weight:900;font-size:0.95rem;cursor:pointer;">Parfait, merci!</button>
     </div>
   </div>
 
