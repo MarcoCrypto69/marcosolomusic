@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Réserver Marco Solo Music — Chansonnier One Man Band | Québec</title>
-  <meta name="description" content="Réservez Marco Solo pour votre événement au Québec. Vérifiez les disponibilités et envoyez votre demande de booking — réponse sous 24h.">
-  <link rel="canonical" href="https://marcosolomusic.ca/booking.html">
+  <title>Réserver Jervais — Chansonnier One Man Band | Québec</title>
+  <meta name="description" content="Réservez Jervais pour votre événement au Québec. Vérifiez les disponibilités et envoyez votre demande de booking — réponse sous 24h.">
+  <link rel="canonical" href="https://jervais.ca/booking.html">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://marcosolomusic.ca/booking.html">
-  <meta property="og:title" content="Réserver Marco Solo Music — Chansonnier One Man Band | Québec">
-  <meta property="og:description" content="Réservez Marco Solo pour votre événement au Québec. Vérifiez les disponibilités et envoyez votre demande — réponse sous 24h.">
+  <meta property="og:url" content="https://jervais.ca/booking.html">
+  <meta property="og:title" content="Réserver Jervais — Chansonnier One Man Band | Québec">
+  <meta property="og:description" content="Réservez Jervais pour votre événement au Québec. Vérifiez les disponibilités et envoyez votre demande — réponse sous 24h.">
   <meta property="og:image" content="https://jervais.ca/jervais-og.jpg">
   <meta property="og:locale" content="fr_CA">
   <style>
@@ -416,7 +416,7 @@
 
     <div class="page-title">
       <p>Booking</p>
-      <h1>Réservez Marco Solo</h1>
+      <h1>Réservez Jervais</h1>
       <p class="sub">Vérifiez la disponibilité et envoyez votre demande — réponse sous 24h.</p>
     </div>
 
@@ -458,7 +458,7 @@
         <div class="contact-alt">
           <p>Ou contactez directement :</p>
           <a href="mailto:info@marcosolomusic.ca" class="contact-link">✉️ &nbsp;info@marcosolomusic.ca</a>
-          <a href="https://www.facebook.com/marcosolomusic" target="_blank" class="contact-link">📘 &nbsp;Facebook — Marco Solo Music</a>
+          <a href="https://www.facebook.com/marcosolomusic" target="_blank" class="contact-link">📘 &nbsp;Facebook — Jervais</a>
         </div>
       </div>
 
@@ -466,7 +466,7 @@
   </div>
 
   <footer>
-    &copy; 2026 Marco Solo Music — <a href="index.html">Retour au site</a> &nbsp;|&nbsp; Site par <a href="https://kodai.ca" target="_blank">KodAI</a>
+    &copy; 2026 Jervais — <a href="index.html">Retour au site</a> &nbsp;|&nbsp; Site par <a href="https://kodai.ca" target="_blank">KodAI</a>
   </footer>
 
   <script>
@@ -628,7 +628,7 @@
       btn.textContent = 'Envoi en cours...';
       btn.disabled = true;
       try {
-        const res = await fetch('https://www.marcosolomusic.ca/api/booking', {
+        const res = await fetch('/api/booking', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

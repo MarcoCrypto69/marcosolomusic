@@ -19,19 +19,19 @@ module.exports = async function handler(req, res) {
         subject: `Demande de booking — ${nom}`,
         html: `<!DOCTYPE html>
 <html><head><meta charset="UTF-8"></head>
-<body style="margin:0;padding:0;background:#0a0a0a;font-family:Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0a;padding:32px 0;">
+<body style="margin:0;padding:0;background:#0f1013;font-family:Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#0f1013;padding:32px 0;">
     <tr><td align="center">
-      <table width="600" cellpadding="0" cellspacing="0" style="background:#111;border-radius:12px;overflow:hidden;border:1px solid rgba(245,166,35,0.3);">
-        <tr><td align="center" style="background:#0a0a0a;padding:24px 0 16px;">
-          <img src="https://marcosolomusic.ca/logo.png" width="220" alt="Marco Solo Music" style="display:block;">
+      <table width="600" cellpadding="0" cellspacing="0" style="background:#17181d;border-radius:12px;overflow:hidden;border:1px solid rgba(227,32,45,0.3);">
+        <tr><td align="center" style="background:#0f1013;padding:24px 0 16px;">
+          <img src="https://jervais.ca/logo.png" width="220" alt="Jervais" style="display:block;">
         </td></tr>
-        <tr><td style="padding:8px 0;background:#f5a623;"></td></tr>
+        <tr><td style="padding:8px 0;background:#e3202d;"></td></tr>
         <tr><td style="padding:32px 40px;">
-          <h2 style="color:#f5a623;font-size:20px;margin:0 0 24px;">🎸 Nouvelle demande de booking</h2>
+          <h2 style="color:#e3202d;font-size:20px;margin:0 0 24px;">🎸 Nouvelle demande de booking</h2>
           <table width="100%" cellpadding="8" cellspacing="0">
             <tr><td style="color:#999;font-size:13px;width:130px;">Nom</td><td style="color:#fff;font-size:15px;">${nom}</td></tr>
-            <tr><td style="color:#999;font-size:13px;">Courriel</td><td style="color:#fff;font-size:15px;"><a href="mailto:${email}" style="color:#f5a623;">${email}</a></td></tr>
+            <tr><td style="color:#999;font-size:13px;">Courriel</td><td style="color:#fff;font-size:15px;"><a href="mailto:${email}" style="color:#e3202d;">${email}</a></td></tr>
             <tr><td style="color:#999;font-size:13px;">Téléphone</td><td style="color:#fff;font-size:15px;">${telephone || '—'}</td></tr>
             <tr><td style="color:#999;font-size:13px;">Type</td><td style="color:#fff;font-size:15px;">${type || '—'}</td></tr>
             <tr><td style="color:#999;font-size:13px;">Date</td><td style="color:#fff;font-size:15px;">${date || '—'}</td></tr>
@@ -39,8 +39,8 @@ module.exports = async function handler(req, res) {
             <tr><td style="color:#999;font-size:13px;vertical-align:top;">Message</td><td style="color:#fff;font-size:15px;">${message || '—'}</td></tr>
           </table>
         </td></tr>
-        <tr><td style="padding:16px 40px;background:#0a0a0a;text-align:center;">
-          <p style="color:#555;font-size:12px;margin:0;">marcosolomusic.ca</p>
+        <tr><td style="padding:16px 40px;background:#0f1013;text-align:center;">
+          <p style="color:#555;font-size:12px;margin:0;">jervais.ca</p>
         </td></tr>
       </table>
     </td></tr>

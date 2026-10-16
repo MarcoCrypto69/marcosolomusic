@@ -17,7 +17,7 @@ module.exports = async function handler(req, res) {
       signal: ctrl.signal,
       headers: {
         // iCloud sert le .ics ; certains edges veulent un User-Agent
-        'User-Agent': 'MarcoSoloMusic-Calendar/1.0',
+        'User-Agent': 'Jervais-Calendar/1.0',
         'Accept': 'text/calendar, text/plain, */*',
       },
     });
