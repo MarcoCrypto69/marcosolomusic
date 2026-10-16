@@ -544,8 +544,11 @@
 
     .about-image img {
       width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
       border-radius: 12px;
-      filter: drop-shadow(0 20px 60px rgba(227, 32, 45, 0.3));
+      border: 1px solid #2b2c34;
+      box-shadow: 0 20px 60px rgba(227, 32, 45, 0.25);
     }
 
     /* === SERVICES === */
@@ -1415,7 +1418,7 @@
   <section id="about">
     <div class="about-grid">
       <div class="about-image">
-        <img src="logo.png" alt="Jervais">
+        <img src="/campings/marco-show-guitare.jpg" alt="Jervais sur scène avec sa guitare électrique" loading="lazy">
       </div>
       <div class="about-text">
         <p class="section-label">À propos</p>
