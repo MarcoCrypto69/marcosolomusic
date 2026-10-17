@@ -2249,13 +2249,18 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ messages: msmChatHistory }),
         });
-        const data = await res.json();
+        const data = await res.json().catch(() => ({}));
         typing.remove();
-        const reply = data.content || 'Désolé, une erreur est survenue.';
-        msmAddMsg(reply, 'bot');
-        msmChatHistory.push({ role: 'assistant', content: reply });
+        if (res.ok && data.content) {
+          msmAddMsg(data.content, 'bot');
+          msmChatHistory.push({ role: 'assistant', content: data.content });
+        } else {
+          msmChatHistory.pop();
+          msmAddMsg('Désolé, une erreur est survenue. Contactez Jervais directement à info@marcosolomusic.ca', 'bot');
+        }
       } catch {
         typing.remove();
+        msmChatHistory.pop();
         msmAddMsg('Désolé, une erreur est survenue. Contactez Jervais directement à info@marcosolomusic.ca', 'bot');
       }
     }

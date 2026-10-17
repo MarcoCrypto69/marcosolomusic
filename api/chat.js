@@ -1,7 +1,4 @@
-import Anthropic from '@anthropic-ai/sdk';
-
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
+// Agent AI du site — appelle l'API Anthropic directement (aucune dépendance npm)
 const SYSTEM_PROMPT = `Vous êtes l'assistant virtuel de Jervais. Votre rôle est d'informer les visiteurs sur Jervais et ses services, et de faciliter les demandes de réservation.
 
 À propos de Jervais :
@@ -34,30 +31,51 @@ Directives :
 - La philosophie de Jervais : l'important c'est que les gens aient du fun
 - Pour les disponibilités et les dates, toujours diriger vers info@marcosolomusic.ca ou jervais.ca/booking.html — ne jamais confirmer ni infirmer une disponibilité`;
 
-export default async function handler(req, res) {
+const MODEL = process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5';
+
+module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { messages } = req.body;
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    console.error('ANTHROPIC_API_KEY manquante dans Vercel');
+    return res.status(500).json({ error: 'Configuration manquante' });
+  }
 
+  const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
+  const { messages } = body;
   if (!messages || !Array.isArray(messages)) {
     return res.status(400).json({ error: 'Messages requis' });
   }
 
-  try {
-    const response = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 400,
-      system: SYSTEM_PROMPT,
-      messages: messages.slice(-10),
-    });
+  // L'API exige que le premier message soit de l'utilisateur
+  let history = messages
+    .filter(m => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string' && m.content.trim())
+    .slice(-10);
+  while (history.length && history[0].role !== 'user') history.shift();
+  if (!history.length) return res.status(400).json({ error: 'Messages requis' });
 
-    return res.status(200).json({
-      content: response.content[0].text,
+  try {
+    const r = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({ model: MODEL, max_tokens: 400, system: SYSTEM_PROMPT, messages: history }),
     });
+    const data = await r.json();
+    if (!r.ok) {
+      console.error('Erreur API Anthropic', r.status, JSON.stringify(data));
+      return res.status(502).json({ error: 'Erreur IA', detail: data && data.error && data.error.type });
+    }
+    const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('\n').trim();
+    return res.status(200).json({ content: text });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: 'Erreur serveur' });
   }
-}
+};
