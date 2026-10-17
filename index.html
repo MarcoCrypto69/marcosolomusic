@@ -1323,7 +1323,27 @@
       .song-style { display: none; }
       .song-artist { display: none; }
     }
-      /* Bande guitare fondue + fumée rouge (ordi seulement) */
+  
+    /* Annonce campings */
+    .camping-annonce {
+      display: inline-flex; align-items: center; gap: 12px; margin-top: 28px;
+      padding: 10px 18px 10px 10px; border-radius: 999px; text-decoration: none; color: var(--white);
+      background: rgba(23,24,29,0.7); border: 1px solid rgba(227,32,45,0.55);
+      box-shadow: 0 0 18px rgba(227,32,45,0.3); backdrop-filter: blur(6px);
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      animation: campingPulse 2.6s ease-in-out infinite;
+    }
+    .camping-annonce:hover { transform: translateY(-2px); border-color: var(--gold); box-shadow: 0 0 30px rgba(227,32,45,0.55); }
+    .camping-annonce-tag { background: var(--gold); color: #fff; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 10px; border-radius: 999px; }
+    .camping-annonce-txt { font-size: 1rem; }
+    .camping-annonce-txt strong { color: var(--gold); }
+    .camping-annonce-arrow { color: var(--gold); font-weight: 700; transition: transform 0.2s; }
+    .camping-annonce:hover .camping-annonce-arrow { transform: translateX(4px); }
+    @keyframes campingPulse { 0%,100% { box-shadow: 0 0 14px rgba(227,32,45,0.25); } 50% { box-shadow: 0 0 28px rgba(227,32,45,0.55); } }
+    @media (prefers-reduced-motion: reduce) { .camping-annonce { animation: none; } }
+    @media (max-width: 420px) { .camping-annonce-tag { display: none; } }
+
+    /* Bande guitare fondue + fumée rouge (ordi seulement) */
     .side-art { display: none; }
     @media (min-width: 1200px) {
       html { background: radial-gradient(ellipse 45vw 70vh at 8% 55%, rgba(227,32,45,0.28), transparent 70%), radial-gradient(ellipse 40vw 40vh at 55% 18%, rgba(227,32,45,0.14), transparent 70%), radial-gradient(ellipse 50vw 50vh at 90% 90%, rgba(120,20,25,0.12), transparent 70%), #0f1013; background-attachment: fixed; }
@@ -1410,6 +1430,11 @@
       <a href="booking.html" class="btn-primary">Réserver Jervais</a>
       <a href="#shows" class="btn-secondary">Prochains shows</a>
     </div>
+    <a href="/campings/" class="camping-annonce">
+      <span class="camping-annonce-tag">Saison 2027</span>
+      <span class="camping-annonce-txt">🏕️ Camping? <strong>Cliquez ici!</strong></span>
+      <span class="camping-annonce-arrow" aria-hidden="true">→</span>
+    </a>
   </section>
 
   <!-- SHOWS -->
