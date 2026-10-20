@@ -24,7 +24,7 @@ module.exports = async function handler(req, res) {
     <tr><td align="center">
       <table width="600" cellpadding="0" cellspacing="0" style="background:#17181d;border-radius:12px;overflow:hidden;border:1px solid rgba(227,32,45,0.3);">
         <tr><td align="center" style="background:#0f1013;padding:24px 0 16px;">
-          <img src="https://jervais.ca/logo.png" width="220" alt="Jervais" style="display:block;">
+          <img src="https://www.jervais.ca/logo.png" width="220" alt="Jervais" style="display:block;">
         </td></tr>
         <tr><td style="padding:8px 0;background:#e3202d;"></td></tr>
         <tr><td style="padding:32px 40px;">
