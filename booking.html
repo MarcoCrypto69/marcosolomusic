@@ -324,6 +324,19 @@
       color: var(--white);
     }
 
+    .btn-submit:disabled,
+    .btn-submit:disabled:hover {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background: var(--gold);
+      color: var(--on-brand);
+    }
+
+    .form-status { display: none; margin: 0; padding: 12px 14px; border-radius: 6px; font-size: 0.92rem; line-height: 1.5; }
+    .form-status.ok { display: block; background: rgba(46, 160, 67, 0.15); border: 1px solid rgba(46, 160, 67, 0.5); color: #7ee2a0; }
+    .form-status.err { display: block; background: rgba(227, 32, 45, 0.12); border: 1px solid rgba(227, 32, 45, 0.5); color: #ff8a8f; }
+    .form-status a { color: inherit; text-decoration: underline; }
+
     /* CONTACT LINKS */
     .contact-alt {
       margin-top: 20px;
@@ -461,6 +474,7 @@
           <input type="text" placeholder="Adresse / Lieu">
           <textarea placeholder="Durée souhaitée, ambiance, demandes spéciales..."></textarea>
           <button type="submit" class="btn-submit">Envoyer ma demande →</button>
+          <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
         </form>
 
         <div class="contact-alt">
@@ -631,34 +645,68 @@
       document.getElementById('bookingForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
+    let envoiEnCours = false;
+
+    function setFormStatus(type, html) {
+      const el = document.getElementById('formStatus');
+      el.className = 'form-status ' + type;
+      el.innerHTML = html;
+    }
+
     async function handleSubmit(e) {
       e.preventDefault();
-      const btn = e.target.querySelector('.btn-submit');
+      if (envoiEnCours) return; // bloque les clics répétés pendant l'envoi
+      envoiEnCours = true;
+      const form = e.target;
+      const btn = form.querySelector('.btn-submit');
       btn.textContent = 'Envoi en cours...';
       btn.disabled = true;
+      setFormStatus('', '');
+
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 20000);
+      let succes = false;
       try {
         const res = await fetch('/api/booking', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          signal: ctrl.signal,
           body: JSON.stringify({
             nom: document.getElementById('nomInput').value.trim(),
             email: document.getElementById('emailInput').value.trim(),
-            telephone: e.target.querySelector('[type="tel"]').value.trim(),
+            telephone: form.querySelector('[type="tel"]').value.trim(),
             type: document.getElementById('typeInput').value,
             date: document.getElementById('bookingDate').value,
-            lieu: e.target.querySelectorAll('input[type="text"]')[1]?.value.trim(),
-            message: e.target.querySelector('textarea').value.trim(),
+            lieu: form.querySelectorAll('input[type="text"]')[1]?.value.trim(),
+            message: form.querySelector('textarea').value.trim(),
           }),
         });
         if (res.ok) {
+          succes = true;
+          form.reset();
+          document.getElementById('dateBanner').classList.remove('visible');
+          document.getElementById('bannerSpacer').style.display = 'none';
+          btn.textContent = '✓ Demande envoyée';
+          setFormStatus('ok', '✓ Ta demande est bien partie. Jervais te revient sous 24 h, pas besoin de la renvoyer.');
+          document.getElementById('merciOverlay').classList.add('visible');
         } else {
-          alert('Erreur lors de l\'envoi. Réessaie ou écris à info@marcosolomusic.ca');
+          setFormStatus('err', 'Oups, la demande n\'est pas partie. Réessaie dans un instant ou écris à <a href="mailto:info@marcosolomusic.ca">info@marcosolomusic.ca</a>.');
         }
-      } catch(err) {
-        alert('Erreur réseau. Réessaie ou écris à info@marcosolomusic.ca');
+      } catch (err) {
+        setFormStatus('err', err.name === 'AbortError'
+          ? 'L\'envoi prend plus de temps que prévu. Vérifie ta connexion avant de réessayer, ou écris à <a href="mailto:info@marcosolomusic.ca">info@marcosolomusic.ca</a>.'
+          : 'Erreur réseau. Réessaie ou écris à <a href="mailto:info@marcosolomusic.ca">info@marcosolomusic.ca</a>.');
+      } finally {
+        clearTimeout(timer);
+        envoiEnCours = false;
       }
-      btn.textContent = 'Envoyer ma demande →';
-      btn.disabled = false;
+      if (succes) {
+        // Laisse le bouton bloqué quelques secondes pour éviter un renvoi par réflexe
+        setTimeout(() => { btn.textContent = 'Envoyer ma demande →'; btn.disabled = false; }, 8000);
+      } else {
+        btn.textContent = 'Envoyer ma demande →';
+        btn.disabled = false;
+      }
     }
 
     init();
