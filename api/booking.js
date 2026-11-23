@@ -1,3 +1,8 @@
+const crypto = require('crypto');
+
+// Échappe le HTML pour que le texte du client s'affiche tel quel dans le courriel
+const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
@@ -5,18 +10,27 @@ module.exports = async function handler(req, res) {
 
   if (!nom || !email) return res.status(400).json({ error: 'Champs requis manquants' });
 
+  // Même demande (mêmes champs) = même clé : Resend n'envoie le courriel qu'une fois
+  // par clé pendant 24 h, donc un double clic ou un renvoi ne fait pas de doublon.
+  const norm = (v) => String(v ?? '').trim().toLowerCase().replace(/\s+/g, ' ');
+  const idempotencyKey = 'booking-' + crypto
+    .createHash('sha256')
+    .update([nom, email, telephone, type, date, lieu, message].map(norm).join('|'))
+    .digest('hex');
+
   try {
     const r = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
         'Content-Type': 'application/json',
+        'Idempotency-Key': idempotencyKey,
       },
       body: JSON.stringify({
         from: 'Booking <booking@marcosolomusic.ca>',
         to: ['patriote521@gmail.com'],
         reply_to: email,
-        subject: `Demande de booking — ${nom}`,
+        subject: `Demande de booking — ${String(nom).trim()}`,
         html: `<!DOCTYPE html>
 <html><head><meta charset="UTF-8"></head>
 <body style="margin:0;padding:0;background:#0f1013;font-family:Arial,sans-serif;">
@@ -30,13 +44,13 @@ module.exports = async function handler(req, res) {
         <tr><td style="padding:32px 40px;">
           <h2 style="color:#e3202d;font-size:20px;margin:0 0 24px;">🎸 Nouvelle demande de booking</h2>
           <table width="100%" cellpadding="8" cellspacing="0">
-            <tr><td style="color:#999;font-size:13px;width:130px;">Nom</td><td style="color:#fff;font-size:15px;">${nom}</td></tr>
-            <tr><td style="color:#999;font-size:13px;">Courriel</td><td style="color:#fff;font-size:15px;"><a href="mailto:${email}" style="color:#e3202d;">${email}</a></td></tr>
-            <tr><td style="color:#999;font-size:13px;">Téléphone</td><td style="color:#fff;font-size:15px;">${telephone || '—'}</td></tr>
-            <tr><td style="color:#999;font-size:13px;">Type</td><td style="color:#fff;font-size:15px;">${type || '—'}</td></tr>
-            <tr><td style="color:#999;font-size:13px;">Date</td><td style="color:#fff;font-size:15px;">${date || '—'}</td></tr>
-            <tr><td style="color:#999;font-size:13px;">Lieu</td><td style="color:#fff;font-size:15px;">${lieu || '—'}</td></tr>
-            <tr><td style="color:#999;font-size:13px;vertical-align:top;">Message</td><td style="color:#fff;font-size:15px;">${message || '—'}</td></tr>
+            <tr><td style="color:#999;font-size:13px;width:130px;">Nom</td><td style="color:#fff;font-size:15px;">${esc(nom)}</td></tr>
+            <tr><td style="color:#999;font-size:13px;">Courriel</td><td style="color:#fff;font-size:15px;"><a href="mailto:${esc(email)}" style="color:#e3202d;">${esc(email)}</a></td></tr>
+            <tr><td style="color:#999;font-size:13px;">Téléphone</td><td style="color:#fff;font-size:15px;">${esc(telephone) || '—'}</td></tr>
+            <tr><td style="color:#999;font-size:13px;">Type</td><td style="color:#fff;font-size:15px;">${esc(type) || '—'}</td></tr>
+            <tr><td style="color:#999;font-size:13px;">Date</td><td style="color:#fff;font-size:15px;">${esc(date) || '—'}</td></tr>
+            <tr><td style="color:#999;font-size:13px;">Lieu</td><td style="color:#fff;font-size:15px;">${esc(lieu) || '—'}</td></tr>
+            <tr><td style="color:#999;font-size:13px;vertical-align:top;">Message</td><td style="color:#fff;font-size:15px;">${esc(message).replace(/\n/g, '<br>') || '—'}</td></tr>
           </table>
         </td></tr>
         <tr><td style="padding:16px 40px;background:#0f1013;text-align:center;">
@@ -48,6 +62,9 @@ module.exports = async function handler(req, res) {
 </body></html>`,
       }),
     });
+
+    // 409 = la même demande est déjà envoyée (ou en cours) : pas une erreur pour le client
+    if (r.status === 409) return res.status(200).json({ ok: true, duplicate: true });
 
     if (!r.ok) {
       const err = await r.text();
